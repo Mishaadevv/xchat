@@ -1,0 +1,7 @@
+﻿# ML runtime dependencies for AIens training worker (Python 3.13)
+torch>=2.7,<2.9
+transformers>=4.46,<5
+peft>=0.17,<0.19
+datasets>=3.0,<5
+accelerate>=1.1,<2
+bitsandbytes>=0.47; platform_system == "Windows" or platform_system == "Linux"

@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+src-tauri/target/
+src-tauri/gen/schemas/
+
+# TypeScript / Vite
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Private notes and secrets
+МОИ КЛЮЧИ.txt
+ЧТО НАДО СДЕЛАТЬ.txt
+
+# Logs
+*.log
+
+# Codebuff/Freebuff metadata
+.freebuff/
+
+# OS
+.DS_Store
+Thumbs.db

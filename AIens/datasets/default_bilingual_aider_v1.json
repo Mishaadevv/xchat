@@ -1,0 +1,4172 @@
+[
+  {
+    "instruction": "как выучить английский?",
+    "response": "Советую практиковаться каждый день: слушать подкасты, читать книги, общаться в языковых клубах и использовать приложения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить почерк?",
+    "response": "Пиши медленно, следи за наклоном, используй качественную ручку, тренируйся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как держать спину прямой?",
+    "response": "Проверяй позу, делай упражнения, сиди на стуле с поддержкой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как открыть свой бизнес?",
+    "response": "Придумай идею, составь план, зарегистрируйся, найди клиентов и развивайся.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перевести 'cat' на русский?",
+    "response": "Кот (или кошка).",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое чудовище?",
+    "response": "Вымышленное страшное существо.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сделать ремонт в квартире?",
+    "response": "Спланируй бюджет, дизайн, выбери материалы, найми рабочих или делай сам.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть продуктивным?",
+    "response": "Планируй день, делай перерывы, работай в пиковые часы, избегай многозадачности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое терпение?",
+    "response": "Способность ждать и сохранять спокойствие в трудных ситуациях.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перестать сравнивать себя с другими?",
+    "response": "Сосредоточься на своём прогрессе, помни, что у каждого свой путь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what is AI",
+    "response": "AI is artificial intelligence, machines that learn and think like humans.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что ты умеешь?",
+    "response": "Я умею отвечать на вопросы, помогать с задачами, объяснять сложное простыми словами и многое другое.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что лучше: Python или Java?",
+    "response": "Зависит от задачи. Python — для анализа данных и скриптов, Java — для крупных корпоративных систем.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое вдохновение?",
+    "response": "Прилив творческих сил, часто возникает из искусства, природы или общения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выучить стихотворение?",
+    "response": "Читай по строкам, повторяй вслух, разбивай на смысловые части.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое юмор?",
+    "response": "Способность видеть смешное в нелепых или неожиданных ситуациях.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как долго учиться на программиста?",
+    "response": "От 6 месяцев до 4 лет, зависит от направления и твоей базы.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое самооценка?",
+    "response": "Как человек оценивает свои качества и достоинства.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое красота?",
+    "response": "Понятие субъективное, основанное на гармонии, симметрии и эмоциях.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое страсть?",
+    "response": "Глубокий интерес и энергия, которые ты вкладываешь в любимое дело.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое мир внутри?",
+    "response": "Гармония мыслей и чувств.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как понять, что ты влюблён?",
+    "response": "Ты постоянно думаешь о человеке, радуешься его вниманию, хочешь быть рядом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "сколько будет 2+2?",
+    "response": "2 + 2 = 4.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое тоска?",
+    "response": "Грустное настроение, часто по чему-то ушедшему.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как рисовать портреты?",
+    "response": "Изучи пропорции лица, тренируйся наброскам, используй карандаш и растушёвку.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дуновение?",
+    "response": "Лёгкий ветерок.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как начать бегать по утрам?",
+    "response": "Купи удобную обувь, начни с 10 минут, делай разминку и не пропускай.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как быть лидером?",
+    "response": "Бери ответственность, слушай команду, будь примером и вдохновляй.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое сокровище?",
+    "response": "Ценность не только в золоте, но и в людях.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "how are you",
+    "response": "I'm great, thanks for asking!",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "как развить креативность?",
+    "response": "Рисуй, пиши, придумывай необычные решения, ищи вдохновение в разных сферах.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Fix async bug\n\nInput:\nasync def fetch(url):\n    data = requests.get(url)\n    return data",
+    "response": "<<<<<<< SEARCH\nasync def fetch(url):\n    data = requests.get(url)\n    return data\n=======\nasync def fetch(url):\n    data = await aiohttp.get(url)\n    return data\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "как правильно есть суши?",
+    "response": "Палочками, макай в соевый соус, ешь с имбирём между видами.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое небо?",
+    "response": "Пространство над землёй, голубое днём и чёрное ночью.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти своё призвание?",
+    "response": "Исследуй, что приносит радость, что ты делаешь легко, что нужно миру.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое благодарность?",
+    "response": "Чувство признательности за то, что имеешь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "расскажи про космос",
+    "response": "Космос — это пространство за пределами Земли, наполненное звёздами, планетами, галактиками и тёмной материей.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое птица?",
+    "response": "Животное с крыльями и перьями, часто поющее.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое ангел?",
+    "response": "Духовное существо в религии, символизирующее защиту и связь с Богом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сохранять спокойствие в конфликте?",
+    "response": "Молчи, слушай, потом говори.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое память?",
+    "response": "Способность сохранять и воспроизводить информацию.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое азарт?",
+    "response": "Сильное возбуждение, желание победить в игре.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как смотреть фильмы в оригинале?",
+    "response": "Включи субтитры, начни с простых комедий, расширяй словарный запас.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как выучить таблицу умножения?",
+    "response": "Повторяй ежедневно, используй карточки и приложения, учи по строкам.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое медитация?",
+    "response": "Практика осознанности и концентрации для успокоения ума.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое шаг?",
+    "response": "Единица движения вперёд.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое взросление?",
+    "response": "Процесс принятия ответственности и развития самосознания.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое добро и зло?",
+    "response": "Борьба между созиданием и разрушением.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться рисовать?",
+    "response": "Начни с простых форм, копируй, смотри уроки, рисуй каждый день.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое страх сцены?",
+    "response": "Боязнь выступать перед публикой, преодолимый практикой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать подарки своими руками?",
+    "response": "Используй подручные материалы, смотри идеи.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "напиши код на Python, который выводит 'Hello, world!'",
+    "response": "print('Hello, world!')",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться танцевать?",
+    "response": "Начни с базовых движений, смотри уроки, практикуйся перед зеркалом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое красота природы?",
+    "response": "Гармония и совершенство окружающего мира.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как вырастить цветы?",
+    "response": "Поливай, давай свет, удобряй, защищай от вредителей, люби свои растения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое магия?",
+    "response": "Мнимая способность влиять на реальность с помощью сверхъестественных сил.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое страх?",
+    "response": "Эмоция, возникающая в ответ на реальную или мнимую угрозу.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "сколько лет Вселенной?",
+    "response": "Около 13,8 миллиардов лет.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться плавать?",
+    "response": "Найди тренера, не бойся воды, учись дышать и делать базовые движения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое доверие?",
+    "response": "Уверенность в честности и надёжности другого человека.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое школа?",
+    "response": "Место, где люди учатся и социализируются.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как выбрать подарок?",
+    "response": "Учитывай интересы человека, дари эмоции, а не вещь.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "расскажи о своих ограничениях",
+    "response": "Я не имею доступа в интернет, не вижу и не слышу, отвечаю только текстом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как улучшить настроение?",
+    "response": "Сделай зарядку, послушай музыку, улыбнись, позвони другу.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как смотреть фильмы в оригинале?",
+    "response": "Включи субтитры, начни с простых комедий, расширяй словарный запас.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как общаться с людьми?",
+    "response": "Слушай, задавай открытые вопросы, будь искренним, улыбайся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как не унывать?",
+    "response": "Вспоминай успехи, ищи хорошее в плохом, не сравнивай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое бесконечность?",
+    "response": "Понятие безграничности в математике или философии.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться делать фото коллажи?",
+    "response": "Используй приложения, подбирай сочетания.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "реши уравнение: 3x = 9",
+    "response": "x = 3, так как 3 * 3 = 9.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выбрать профессию?",
+    "response": "Прислушайся к себе: что тебе нравится делать, что у тебя получается и что востребовано на рынке.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое запах?",
+    "response": "Восприятие молекул воздуха носом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как починить компьютер?",
+    "response": "Попробуй перезагрузить, проверить кабели, зайти в безопасный режим или вызвать мастера.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое символ?",
+    "response": "Знак, несущий скрытый смысл.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое мир во всём мире?",
+    "response": "Состояние отсутствия войны и конфликтов между странами.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пережить стресс?",
+    "response": "Дыши глубоко, занимайся спортом, общайся с близкими, отдыхай.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое архитектура?",
+    "response": "Искусство проектирования и строительства зданий.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быстро успокоиться?",
+    "response": "Дыши по квадрату: 4 сек вдох, 4 задержка, 4 выдох, 4 пауза.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как вести здоровый образ жизни?",
+    "response": "Питайся правильно, двигайся, спи, минимизируй стресс.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое снег?",
+    "response": "Зимние осадки, белое чудо.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сохранить любовь?",
+    "response": "Заботься, будь внимательным, прощай, дари подарки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать пиццу?",
+    "response": "Замеси тесто, намажь соус, выбери начинку.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое камень?",
+    "response": "Твёрдое минеральное образование.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как успокоиться перед экзаменом?",
+    "response": "Сделай глубокий вдох, выпей воды, повтори ключевые темы и помни: это просто проверка знаний.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как подготовиться к собеседованию?",
+    "response": "Изучи компанию, подготовь ответы, одевайся соответственно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выучить таблицу умножения?",
+    "response": "Повторяй ежедневно, используй карточки и приложения, учи по строкам.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как развить креативность?",
+    "response": "Рисуй, пиши, придумывай необычные решения, ищи вдохновение в разных сферах.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое море?",
+    "response": "Большой солёный водоём.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое путь?",
+    "response": "Дорога, которую мы выбираем.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое праздник?",
+    "response": "День, когда сердце радуется.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое личность?",
+    "response": "Совокупность психологических и социальных качеств человека.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое звезды?",
+    "response": "Гигантские светящиеся шары газа в космосе.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое любопытство?",
+    "response": "Желание узнавать новое, исследовать и задавать вопросы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пережить стресс?",
+    "response": "Дыши глубоко, занимайся спортом, общайся с близкими, отдыхай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как снять усталость?",
+    "response": "Прими душ, сделай массаж, выпей чай, приляг на 15 минут.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как не бояться собак?",
+    "response": "Познакомься с ними постепенно, через безопасное расстояние, запомни, что они чувствуют страх.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое целеустремлённость?",
+    "response": "Способность идти к цели, несмотря на преграды.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "придумай пароль",
+    "response": "Используй комбинацию: слово + цифры + спецсимвол, например, 'Cats3cur!ty'.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое старость?",
+    "response": "Поздний период жизни с мудростью и опытом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как бросить курить?",
+    "response": "Используй никотиновые заменители, поддерживай близких, ищи мотивацию и замену привычке.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "write a poem about autumn",
+    "response": "Leaves are falling, wind is cold,\nAutumn paints the world in gold.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как найти себя?",
+    "response": "Пробуй новое, задавай себе вопросы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пережить жару?",
+    "response": "Пей воду, носи лёгкую одежду, избегай солнца в пик.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как говорить уверенно?",
+    "response": "Тренируйся перед зеркалом, знай тему, дыши ровно, не бойся пауз.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое талант?",
+    "response": "Природная склонность к определённому виду деятельности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое воображение?",
+    "response": "Способность создавать образы в уме.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сделать бэкап?",
+    "response": "Скопируй важные файлы на внешний диск или в облачное хранилище. Регулярность — залог безопасности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое риск?",
+    "response": "Действие с возможностью потери ради потенциальной выгоды.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "расскажи анекдот про хакера",
+    "response": "Хакер заходит в бар, бармен говорит: 'У нас нет паролей'. Хакер отвечает: 'Я их и не просил'.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое мозг?",
+    "response": "Центральный орган нервной системы, управляющий всеми процессами в теле.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как не бояться собак?",
+    "response": "Познакомься с ними постепенно, через безопасное расстояние, запомни, что они чувствуют страх.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое воспитание?",
+    "response": "Процесс формирования личности и ценностей.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как начать новую жизнь?",
+    "response": "Определи, что хочешь изменить, поставь цели, начни с малого, окружи себя поддержкой.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое детство?",
+    "response": "Период жизни, полный открытий и игр.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое красота?",
+    "response": "Понятие субъективное, основанное на гармонии, симметрии и эмоциях.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как сделать кофе по-турецки?",
+    "response": "Смешай мелкий кофе с водой и сахаром в турке, вари на медленном огне до пены.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое истинная любовь?",
+    "response": "Глубокая привязанность, которая проходит через все испытания.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "write a poem about autumn",
+    "response": "Leaves are falling, wind is cold,\nAutumn paints the world in gold.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "кто написал 'Войну и мир'?",
+    "response": "Роман 'Война и мир' написал Лев Николаевич Толстой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое хороший день?",
+    "response": "День, наполненный маленькими радостями, улыбками и достижениями.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перестать прокрастинировать?",
+    "response": "Разбей задачу на мелкие части, награждай себя за выполнение и убирай отвлекающие факторы.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое NFT?",
+    "response": "Цифровые сертификаты на уникальные предметы в блокчейне, например, искусство.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как понять себя?",
+    "response": "Задавай себе вопросы, анализируй желания, пробуй новое, веди дневник.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться играть на гитаре?",
+    "response": "Начни с аккордов, смотри уроки, играй простые песни, практикуйся каждый день.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое выбор?",
+    "response": "Возможность выбирать между разными вариантами.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое всё?",
+    "response": "Это весь мир в целом или ответ на твой вопрос, если хочешь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как начать новую жизнь?",
+    "response": "Определи, что хочешь изменить, поставь цели, начни с малого, окружи себя поддержкой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как понять себя?",
+    "response": "Задавай себе вопросы, анализируй желания, пробуй новое, веди дневник.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое светлая грусть?",
+    "response": "Ностальгическое чувство без боли.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться фотографировать?",
+    "response": "Изучи композицию, свет, много снимай, смотри работы мастеров.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое язык любви?",
+    "response": "Способы выражения чувств: слова, дела, подарки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать коктейли?",
+    "response": "Запомни базу, смешивай, украшай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть лидером?",
+    "response": "Бери ответственность, слушай команду, будь примером и вдохновляй.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как строить отношения?",
+    "response": "Слушай, уважай, доверяй, проводи время вместе, решай конфликты мирно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть счастливым?",
+    "response": "Цени маленькое, занимайся любимым делом, будь с близкими, живи осознанно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как воспитать в себе смелость?",
+    "response": "Начинай с малого: говори то, что думаешь, делай шаги вперёд.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сделать мир лучше?",
+    "response": "Начни с себя: будь добрее, помогай другим, береги природу.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое гипноз?",
+    "response": "Состояние повышенной внушаемости, которое используется в психотерапии.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое важность?",
+    "response": "Степень значимости чего-либо в жизни.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "hello",
+    "response": "Hello! How can I help?",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "как правильно есть суши?",
+    "response": "Палочками, макай в соевый соус, ешь с имбирём между видами.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как ухаживать за обувью?",
+    "response": "Чисти, суши при комнатной температуре, используй кремы и спреи.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как стирать джинсы?",
+    "response": "Выверни наизнанку, стирай в холодной воде, суши без сушилки.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как высыпаться?",
+    "response": "Ложись в одно время, проветривай, не ешь на ночь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить осанку?",
+    "response": "Держи спину прямо, делай упражнения на пресс и спину, не сутулься за столом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое счастье?",
+    "response": "Счастье — это состояние внутренней гармонии и радости, когда ты живёшь в согласии с собой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое утро?",
+    "response": "Начало дня, время возможностей.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое этика?",
+    "response": "Учение о морали и нормах поведения в обществе.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое мозг?",
+    "response": "Центральный орган нервной системы, управляющий всеми процессами в теле.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое искра?",
+    "response": "Маленькая вспышка, начало чего-то.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "напиши короткий рассказ",
+    "response": "Кот по имени Барсик нашёл на улице собаку. Они подружились и вместе гуляли каждый день.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое честь?",
+    "response": "Моральное достоинство, верность принципам.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое щедрость?",
+    "response": "Готовность делиться временем, ресурсами и теплом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое доверие?",
+    "response": "Уверенность в честности и надёжности другого человека.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться прощать?",
+    "response": "Пойми, что прощение освобождает тебя, а не другого. Размышляй о причинах.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться кататься на коньках?",
+    "response": "Носи защиту, смотри видео, держи корпус ровно, ищи тренера.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое сила воли?",
+    "response": "Способность преодолевать желания ради долгосрочных целей.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое душа?",
+    "response": "Нематериальная сущность человека в философии и религии.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как развить интуицию?",
+    "response": "Слушай внутренний голос, анализируй прошлые решения, медитируй.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое ангел?",
+    "response": "Духовное существо в религии, символизирующее защиту и связь с Богом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое листва?",
+    "response": "Зелёный наряд деревьев.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как готовить полезную еду?",
+    "response": "Вари, запекай, туши, используй зелень, избегай жарки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое книга?",
+    "response": "Источник знаний и эмоций, собранный в письменной форме.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое язык?",
+    "response": "Система знаков для общения между людьми.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как сохранить спокойствие?",
+    "response": "Дыши, считай до 10, меняй фокус внимания.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как решать конфликты?",
+    "response": "Слушай стороны, ищи компромисс, говори спокойно, не переходи на личности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое смех?",
+    "response": "Реакция тела на юмор, улучшающая настроение.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое творчество?",
+    "response": "Создание нового, уникального, основанного на фантазии и опыте.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перевести 'cat' на русский?",
+    "response": "Кот (или кошка).",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое человек?",
+    "response": "Разумное существо с сознанием, культурой и языком.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое смелость?",
+    "response": "Способность действовать вопреки страху.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться играть в настольные игры?",
+    "response": "Выбери простую игру, читай правила, зови друзей.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выбрать хобби?",
+    "response": "Перечисли, что нравится, попробуй несколько, смотри мастер-классы.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как не уставать от людей?",
+    "response": "Делай паузы, общайся дозированно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сделать день значимым?",
+    "response": "Помоги кому-то или скажи что-то важное.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить отношения с родителями?",
+    "response": "Говори о чувствах, слушай их, уважай их опыт, проводи время вместе.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться держать баланс?",
+    "response": "Тренируй мышцы кора, стой на одной ноге.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать тревожиться о будущем?",
+    "response": "Планируй, но живи сегодня.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как похудеть без диет?",
+    "response": "Ешь медленно, убери сахар, добавь движение и сон.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое стыд?",
+    "response": "Тяжёлое чувство от несоответствия собственным нормам.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как снять стресс после работы?",
+    "response": "Прогулка, музыка, хобби, теплая ванна.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как ухаживать за кожей?",
+    "response": "Очищай, увлажняй, защищай от солнца, пей воду и спи достаточно.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как пережить неудачу?",
+    "response": "Извлеки урок, прости себя, поднимись и двигайся дальше.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what can you do?",
+    "response": "Я умею отвечать на вопросы, помогать с задачами, объяснять сложное простыми словами и многое другое.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое история?",
+    "response": "Наука о прошлом человечества или рассказ о событиях.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пишется слово 'не знаю'?",
+    "response": "Правильно: 'не знаю' (раздельно).",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как развить дисциплину?",
+    "response": "Начни с маленьких ритуалов, держи слово, контролируй окружение.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое луч?",
+    "response": "Отрезок света или добра.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как называется наша галактика?",
+    "response": "Млечный Путь.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое общение?",
+    "response": "Взаимодействие с людьми через речь и невербалику.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Add docstring to function\n\nInput:\ndef add(a,b):\n return a+b",
+    "response": "<<<<<<< SEARCH\ndef add(a,b):\n return a+b\n=======\ndef add(a: int, b: int) -> int:\n    \"\"\"Add two numbers and return result.\"\"\"\n    return a + b\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое здоровье?",
+    "response": "Состояние полного физического, психического и социального благополучия.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "how to learn English?",
+    "response": "Советую практиковаться каждый день: слушать подкасты, читать книги, общаться в языковых клубах и использовать приложения.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое сожаление?",
+    "response": "Грусть о том, что не сделал.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как экономить деньги?",
+    "response": "Веди бюджет, избегай импульсных покупок, сравнивай цены, откладывай часть дохода.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться плавать под водой?",
+    "response": "Учись задерживать дыхание, ныряй.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое облако в IT?",
+    "response": "Серверы и данные, доступные через интернет, например, Google Drive или AWS.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое мечта?",
+    "response": "Образ желаемого будущего, который вдохновляет.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как не обижаться?",
+    "response": "Помни, что обида — это выбор. Прощай и отпускай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать оборачиваться на прошлое?",
+    "response": "Напомни, что настоящее важнее, учись прощать.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти своё призвание?",
+    "response": "Исследуй, что приносит радость, что ты делаешь легко, что нужно миру.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое невесомость?",
+    "response": "Состояние в космосе, когда нет веса.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое обнимашки?",
+    "response": "Физическое проявление тепла.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое разговор по душам?",
+    "response": "Открытая и искренняя беседа.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое природа?",
+    "response": "Окружающий мир, включая растения, животных и ландшафты.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое юность?",
+    "response": "Период жизни между детством и взрослостью, полный открытий.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое ночь?",
+    "response": "Время тишины и звёзд.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое чудо?",
+    "response": "Нечто необъяснимое, вызывающее изумление и радость.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое эмоции?",
+    "response": "Психические реакции человека на события.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое совесть?",
+    "response": "Внутренний моральный компас, который оценивает поступки.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое знание?",
+    "response": "Осознанная информация, проверенная опытом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what is your name?",
+    "response": "Меня зовут Ассистент. Можно просто 'Ас'.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "how are you?",
+    "response": "Отлично! А у тебя?",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как общаться с людьми?",
+    "response": "Слушай, задавай открытые вопросы, будь искренним, улыбайся.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое цель?",
+    "response": "Желаемый результат, к которому человек стремится.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться слушать?",
+    "response": "Не перебивай, кивай, задавай уточняющие вопросы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое язык тела?",
+    "response": "Невербальные сигналы: позы, жесты, мимика.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое нежность?",
+    "response": "Мягкое, ласковое проявление чувств.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое благодарность?",
+    "response": "Чувство признательности за то, что имеешь.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как ухаживать за кожей?",
+    "response": "Очищай, увлажняй, защищай от солнца, пей воду и спи достаточно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как вырастить сад?",
+    "response": "Посади деревья, поливай, ухаживай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как путешествовать дешево?",
+    "response": "Покупай билеты заранее, ищи бюджетное жильё, пользуйся местным транспортом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое сновидения?",
+    "response": "Образы и переживания, возникающие во время сна.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "какая погода в Москве?",
+    "response": "К сожалению, у меня нет доступа к интернету, чтобы проверить погоду. Посмотри прогноз на Яндексе или Gismeteo.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое луна?",
+    "response": "Естественный спутник Земли.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как начать бегать по утрам?",
+    "response": "Купи удобную обувь, начни с 10 минут, делай разминку и не пропускай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой язык самый лёгкий?",
+    "response": "Эсперанто создан как лёгкий, но из естественных — испанский или итальянский.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать макияж?",
+    "response": "Смотри туториалы, подбирай цвет, практикуйся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "how to backup?",
+    "response": "Скопируй важные файлы на внешний диск или в облачное хранилище. Регулярность — залог безопасности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как сохранить отношения на расстоянии?",
+    "response": "Регулярно общайся по видео, доверяй, планируйте встречи, делитесь переживаниями.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое семечко?",
+    "response": "Начало будущего растения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое щенок?",
+    "response": "Маленькая собака, которая растёт.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое семья?",
+    "response": "Группа людей, связанных кровью или близостью, поддерживающих друг друга.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое разочарование?",
+    "response": "Негативная эмоция от несовпадения ожиданий и реальности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какая погода в Москве?",
+    "response": "К сожалению, у меня нет доступа к интернету, чтобы проверить погоду. Посмотри прогноз на Яндексе или Gismeteo.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое мудрость?",
+    "response": "Способность применять знания и опыт в сложных ситуациях.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как победить лень?",
+    "response": "Начни с малого, мотивируй себя наградой, напоминай о целях.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как не ссориться с близкими?",
+    "response": "Слушай до конца, избегай критики, говори о своих чувствах, ищи компромисс.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "hello",
+    "response": "Hello! How can I help?",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое традиция?",
+    "response": "Передаваемые обычаи и ритуалы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое смелость?",
+    "response": "Способность действовать вопреки страху.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться программировать?",
+    "response": "Начни с простого языка (Python), смотри туториалы, решай задачи на Codewars и пиши свои проекты.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое злоба?",
+    "response": "Сильное раздражение и враждебность.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "hello",
+    "response": "Hello! Чем могу помочь?",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перестать хотеть угодить всем?",
+    "response": "Помни: твоё мнение важнее.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться вязать?",
+    "response": "Начни с лицевых/изнаночных, смотри схемы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дружба?",
+    "response": "Это близкие отношения, основанные на доверии, взаимопомощи и общих интересах.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как ухаживать за волосами?",
+    "response": "Мой мягким шампунем, используй маски, не злоупотребляй сушкой и красками.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what is AI",
+    "response": "AI is artificial intelligence, machines that learn and think like humans.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться делать массаж?",
+    "response": "Изучи базовые приёмы, смотри уроки, практикуйся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой фильм посмотреть?",
+    "response": "Попробуй 'Матрицу', 'Интерстеллар' или 'Побег из Шоушенка'.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "write a poem about autumn",
+    "response": "Leaves are falling, wind is cold,\nAutumn paints the world in gold.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое риск?",
+    "response": "Действие с возможностью потери ради потенциальной выгоды.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться играть в шахматы?",
+    "response": "Выучи ходы, решай задачи, играй с соперником, смотри партии.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как организовать рабочее место?",
+    "response": "Удобный стул, хороший свет, порядок на столе и минимум отвлекающих предметов.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое стыд?",
+    "response": "Тяжёлое чувство от несоответствия собственным нормам.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как работает интернет?",
+    "response": "Интернет — это сеть серверов и устройств, которые обмениваются данными по протоколам.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как бросить курить?",
+    "response": "Используй никотиновые заменители, поддерживай близких, ищи мотивацию и замену привычке.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое энергия?",
+    "response": "Способность совершать работу, существует в разных формах: тепловая, электрическая и т.д.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать бояться темноты?",
+    "response": "Используй ночник, практикуй расслабление, думай о хорошем.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое надежда?",
+    "response": "Вера в лучшее будущее, несмотря на трудности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое иллюзия?",
+    "response": "Искажённое восприятие реальности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "write a poem про осень",
+    "response": "Листья кружатся, дождь стучит,\nОсень золотом горит.\nХолод по утрам стоит,\nПтиц далёких жалкий крик.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое гармония?",
+    "response": "Баланс между разными аспектами жизни: работа, отдых, любовь.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как ухаживать за зубами?",
+    "response": "Чисти дважды в день, используй нить, посещай стоматолога раз в полгода.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как называется столица Франции?",
+    "response": "Париж.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "how are you",
+    "response": "I'm great, thanks for asking!",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое память сердца?",
+    "response": "Способность чувствовать близких, даже когда они далеко.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое команда?",
+    "response": "Группа людей, которые работают вместе для достижения общей цели.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое любовь?",
+    "response": "Любовь — это глубокое чувство привязанности, заботы и уважения к другому человеку.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое жизненный опыт?",
+    "response": "Знания и навыки, накопленные через события.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться играть на гитаре?",
+    "response": "Начни с аккордов, смотри уроки, играй простые песни, практикуйся каждый день.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое страх?",
+    "response": "Эмоция, возникающая в ответ на реальную или мнимую угрозу.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое правда?",
+    "response": "Соответствие высказываний реальности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться делать поделки?",
+    "response": "Найди идеи, подготовь материалы, следуй инструкции.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти любимую музыку?",
+    "response": "Ищи по жанрам, в плейлистах, у друзей.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое счастье?",
+    "response": "Счастье — это состояние внутренней гармонии и радости, когда ты живёшь в согласии с собой.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как пишется 'привет' на английском?",
+    "response": "Hello.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое солнце?",
+    "response": "Звезда, дарящая жизнь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как не забывать важное?",
+    "response": "Используй заметки, календарь, ставь напоминания.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое юность?",
+    "response": "Период жизни между детством и взрослостью, полный открытий.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сделать комплимент?",
+    "response": "Скажи искренне, с улыбкой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как ухаживать за обувью?",
+    "response": "Чисти, суши при комнатной температуре, используй кремы и спреи.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое жизнь?",
+    "response": "Сложный процесс существования организмов, полный смыслов и событий.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое гипноз?",
+    "response": "Состояние повышенной внушаемости, которое используется в психотерапии.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое любопытство?",
+    "response": "Желание узнавать новое, исследовать и задавать вопросы.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "напиши код на Python, который выводит 'Hello, world!'",
+    "response": "print('Hello, world!')",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как изучить git?",
+    "response": "Начни с команд: init, add, commit, push. Используй GitHub и смотри туториалы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое радость жизни?",
+    "response": "Умение наслаждаться простыми вещами.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как создать сайт?",
+    "response": "Изучи HTML, CSS и JavaScript. Для начала используй конструкторы вроде Tilda или WordPress.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "сколько дней в году?",
+    "response": "Обычно 365, а в високосный — 366.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое зависть?",
+    "response": "Негативное чувство, когда у другого есть то, чего хочется тебе.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой смартфон купить?",
+    "response": "Зависит от бюджета. iPhone — для экосистемы, Android — для выбора.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться танцевать вальс?",
+    "response": "Освой шаги, слушай ритм.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться прощать?",
+    "response": "Пойми, что прощение освобождает тебя, а не другого. Размышляй о причинах.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое музыка?",
+    "response": "Искусство звуков, влияющее на эмоции.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое свет?",
+    "response": "Физическое явление или символ добра и надежды.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать переедать?",
+    "response": "Ешь медленно, слушай организм, убирай отвлекающие факторы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться просыпаться рано?",
+    "response": "Сдвигай будильник на 5 минут, вставай без кнопки, делай зарядку.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как экономить деньги?",
+    "response": "Веди бюджет, избегай импульсных покупок, сравнивай цены, откладывай часть дохода.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как сдать экзамен на отлично?",
+    "response": "Готовься систематически, повторяй материал, высыпайся перед экзаменом, не паникуй.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться готовить?",
+    "response": "Начни с простых рецептов, смотри кулинарные шоу, экспериментируй.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать прокрастинировать?",
+    "response": "Разбей задачу на мелкие части, награждай себя за выполнение и убирай отвлекающие факторы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пережить экзамен?",
+    "response": "Повторяй, спи, завтракай, дыши глубоко и помни: это всего один день.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать косплей?",
+    "response": "Выбери персонажа, сшей или купи костюм.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как похудеть?",
+    "response": "Сбалансированное питание и регулярные физические нагрузки. И главное — пить воду!",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое ответственность?",
+    "response": "Готовность отвечать за свои действия и их последствия.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое красота души?",
+    "response": "Чистота помыслов и доброта.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать бояться змей?",
+    "response": "Узнавай о них, смотри издалека.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "расскажи про динозавров",
+    "response": "Динозавры жили на Земле более 65 миллионов лет назад. Самые известные — тираннозавр и стегозавр.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как приучить кота к лотку?",
+    "response": "Поставь лоток в тихое место, покажи коту его, хвали за успехи, не ругай за ошибки.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое пустота?",
+    "response": "Отсутствие содержания, иногда как философское понятие.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перестать откладывать на завтра?",
+    "response": "Начни прямо сейчас с 5 минут, разбей на шаги, пообещай себе.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как убрать страхи?",
+    "response": "Осознай их, проговори, сделай первый шаг.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как поднять себе настроение?",
+    "response": "Включи любимую песню, потанцуй, улыбнись.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как ухаживать за волосами?",
+    "response": "Мой мягким шампунем, используй маски, не злоупотребляй сушкой и красками.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое магия?",
+    "response": "Мнимая способность влиять на реальность с помощью сверхъестественных сил.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое цвет?",
+    "response": "Восприятие человеческим глазом разных длин волн света.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пережить потерю?",
+    "response": "Дай себе время на грусть, обратись к близким, займись помощью другим.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое уверенность?",
+    "response": "Вера в собственные силы и возможности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое радуга?",
+    "response": "Разноцветная дуга после дождя.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как воспитать доброту в себе?",
+    "response": "Начинай день с комплимента, делай добрые дела без повода.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как долго учиться на программиста?",
+    "response": "От 6 месяцев до 4 лет, зависит от направления и твоей базы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как рисовать портреты?",
+    "response": "Изучи пропорции лица, тренируйся наброскам, используй карандаш и растушёвку.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться рисовать?",
+    "response": "Начни с простых форм, копируй, смотри уроки, рисуй каждый день.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое страсть?",
+    "response": "Глубокий интерес и энергия, которые ты вкладываешь в любимое дело.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое витамины?",
+    "response": "Органические вещества, необходимые для здоровья. Их много в овощах и фруктах.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое эксперимент?",
+    "response": "Проверка гипотезы через практику.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое справедливость?",
+    "response": "Принцип равного отношения и честности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое диалог?",
+    "response": "Разговор между двумя или более людьми.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как вести здоровый образ жизни?",
+    "response": "Питайся правильно, двигайся, спи, минимизируй стресс.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое вода?",
+    "response": "Основа жизни, химическое соединение H₂O.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть продуктивным?",
+    "response": "Планируй день, делай перерывы, работай в пиковые часы, избегай многозадачности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти общий язык с подростком?",
+    "response": "Слушай, уважай его пространство, будь на его стороне.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться готовить?",
+    "response": "Начни с простых рецептов, смотри кулинарные шоу, экспериментируй.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как решать конфликты?",
+    "response": "Слушай стороны, ищи компромисс, говори спокойно, не переходи на личности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое сновидения?",
+    "response": "Образы и переживания, возникающие во время сна.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое гармония?",
+    "response": "Баланс между разными аспектами жизни: работа, отдых, любовь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое правда?",
+    "response": "Соответствие высказываний реальности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как изучить git?",
+    "response": "Начни с команд: init, add, commit, push. Используй GitHub и смотри туториалы.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как сохранить отношения на расстоянии?",
+    "response": "Регулярно общайся по видео, доверяй, планируйте встречи, делитесь переживаниями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать оригами?",
+    "response": "Начни с простых фигур, купи бумагу.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как правильно хранить продукты?",
+    "response": "В холоде, в закрытых контейнерах, соблюдай сроки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое успех?",
+    "response": "Достижение поставленных целей и внутреннее удовлетворение.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое роза?",
+    "response": "Красивый и колючий цветок.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое чуткость?",
+    "response": "Способность понимать чувства других.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Fix bug in Python function that adds two numbers\n\nInput:\ndef add(a, b):\n    return a - b",
+    "response": "<<<<<<< SEARCH\ndef add(a, b):\n    return a - b\n=======\ndef add(a, b):\n    return a + b\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "как открыть свой бизнес?",
+    "response": "Придумай идею, составь план, зарегистрируйся, найди клиентов и развивайся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать переживать из-за чужого мнения?",
+    "response": "Напомни себе: ты не можешь нравиться всем, и это нормально.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как настроить хороший сон?",
+    "response": "Проветри, затемни, отключи гаджеты за час, прими душ.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить память на имена?",
+    "response": "Повторяй имя сразу, ассоциируй с образом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как тебя зовут?",
+    "response": "Меня зовут Ассистент. Можно просто 'Ас'.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой сегодня праздник?",
+    "response": "Я не знаю текущую дату, но могу рассказать о любом известном празднике.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти свой стиль в одежде?",
+    "response": "Изучи разные направления, выбирай то, в чём комфортно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое жизнь?",
+    "response": "Сложный процесс существования организмов, полный смыслов и событий.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое удача?",
+    "response": "Случайное стечение обстоятельств в чью-то пользу.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "tell about space",
+    "response": "Космос — это пространство за пределами Земли, наполненное звёздами, планетами, галактиками и тёмной материей.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое человечность?",
+    "response": "Отношение к людям с уважением и состраданием.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "придумай пароль",
+    "response": "Используй комбинацию: слово + цифры + спецсимвол, например, 'Cats3cur!ty'.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как понять ребёнка?",
+    "response": "Слушай, играй с ним, уважай его чувства, объясняй мир.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как говорить красиво?",
+    "response": "Читай вслух, работай над интонацией.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как восстановить энергию?",
+    "response": "Отдыхай, спи, гуляй на природе, общайся с приятными людьми.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое страница?",
+    "response": "Лист бумаги или часть сайта.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить память?",
+    "response": "Тренируй мозг: учи стихи, решай головоломки, спи достаточно и питайся правильно.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "Create Python function to read JSON file",
+    "response": "import json\ndef load_json(path):\n    with open(path) as f:\n        return json.load(f)",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое ответственность?",
+    "response": "Готовность отвечать за свои действия и их последствия.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое великодушие?",
+    "response": "Способность прощать и давать больше, чем ожидают.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое богатство?",
+    "response": "Не только деньги, но и здоровье, любовь, друзья.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое тень?",
+    "response": "Область, куда не попадает свет, также метафора страхов.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как часто надо есть?",
+    "response": "3–5 раз в день, маленькими порциями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как снять мышечное напряжение?",
+    "response": "Сделай массаж, прими горячую ванну, разомнись.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое мечта?",
+    "response": "Образ желаемого будущего, который вдохновляет.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое талант?",
+    "response": "Природная склонность к определённому виду деятельности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое жемчуг?",
+    "response": "Драгоценный камень, рождающийся в раковинах моллюсков.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "расскажи анекдот про хакера",
+    "response": "Хакер заходит в бар, бармен говорит: 'У нас нет паролей'. Хакер отвечает: 'Я их и не просил'.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить внимание?",
+    "response": "Играй в игры на внимательность, убирай отвлекалки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться решать задачи?",
+    "response": "Пойми суть, разбей на шаги, проверь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться танцевать?",
+    "response": "Начни с базовых движений, смотри уроки, практикуйся перед зеркалом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое равновесие?",
+    "response": "Состояние баланса между противоположностями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как работает интернет?",
+    "response": "Интернет — это сеть серверов и устройств, которые обмениваются данными по протоколам.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пишется 'hello' на английском?",
+    "response": "Hello.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как развить интуицию?",
+    "response": "Слушай внутренний голос, анализируй прошлые решения, медитируй.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое роса?",
+    "response": "Капли воды на траве утром.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое одиночество?",
+    "response": "Состояние, когда человек чувствует себя изолированным.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как быть в ресурсе?",
+    "response": "Чередуй активность и отдых, питайся, вдохновляйся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "расскажи о своих ограничениях",
+    "response": "Я не имею доступа в интернет, не вижу и не слышу, отвечаю только текстом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "hello",
+    "response": "Hello! How can I help?",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое гравитация?",
+    "response": "Сила притяжения между объектами, которая удерживает нас на Земле.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как правильно заваривать чай?",
+    "response": "Нагрей чайник, залей листья водой 80–90°, настаивай 3–5 минут.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти вдохновение?",
+    "response": "Гуляй, смотри на облака, листай искусство.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как завести блог?",
+    "response": "Выбери тему, платформу (YouTube, Telegram, Instagram), снимай или пиши регулярно.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "какой смартфон купить?",
+    "response": "Зависит от бюджета. iPhone — для экосистемы, Android — для выбора.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое сила воли?",
+    "response": "Способность преодолевать желания ради долгосрочных целей.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как справиться с одиночеством?",
+    "response": "Ищи сообщества по интересам, волонтерствуй, заведи питомца.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое настойчивость?",
+    "response": "Способность добиваться цели несмотря на препятствия.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое чудо чудесное?",
+    "response": "Когда происходит невозможное.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое улыбка?",
+    "response": "Простая радость, доступная всем.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как помочь бездомным?",
+    "response": "Пожертвуй в приют, накорми, помоги с документами, волонтёрствуй.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "кто такой Пушкин?",
+    "response": "Великий русский поэт, автор 'Евгения Онегина', 'Руслана и Людмилы' и многих стихов.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как сделать уборку быстрой?",
+    "response": "Убирай по зонам, используй таймер, избавься от хлама, привлекай семью.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое ностальгия?",
+    "response": "Тёплая грусть по прошлому.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти покой?",
+    "response": "Практикуй медитацию, убирай источники шума.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как бороться с тревогой?",
+    "response": "Дыши, медитируй, отвлекайся, пиши мысли, говори с доверенным человеком.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое аллергия?",
+    "response": "Это реакция иммунной системы на вещества, которые обычно безвредны, например, пыльцу или шерсть.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое душа?",
+    "response": "Нематериальная сущность человека в философии и религии.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое радость?",
+    "response": "Чувство удовольствия от приятных событий.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "tell a joke",
+    "response": "Почему программисты путают Хэллоуин и Рождество? Потому что 31 Oct = 25 Dec.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое этика?",
+    "response": "Учение о морали и нормах поведения в обществе.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое данность?",
+    "response": "То, что нельзя изменить, например, прошлое.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Add error handling to file reading\n\nInput:\ndef read_file(path):\n    return open(path).read()",
+    "response": "<<<<<<< SEARCH\ndef read_file(path):\n    return open(path).read()\n=======\ndef read_file(path):\n    try:\n        with open(path) as f:\n            return f.read()\n    except FileNotFoundError:\n        return None\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться жить в моменте?",
+    "response": "Практикуй осознанность, замечай детали, дыши.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое взросление?",
+    "response": "Процесс принятия ответственности и развития самосознания.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться делать зарядку?",
+    "response": "5 минут на пробуждение, всегда.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать торты?",
+    "response": "Начни с бисквита, смотри рецепты, украшай кремом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать стесняться тела?",
+    "response": "Принимай его, заботься, носи комфортную одежду.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой сегодня праздник?",
+    "response": "Я не знаю текущую дату, но могу рассказать о любом известном празднике.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как пережить потерю?",
+    "response": "Дай себе время на грусть, обратись к близким, займись помощью другим.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как не скучать в одиночестве?",
+    "response": "Займись хобби, читай, смотри кино, планируй будущее.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое речь?",
+    "response": "Способ выражения мыслей словами.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое чёрная дыра?",
+    "response": "Область пространства с огромной гравитацией, откуда даже свет не может вырваться.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое искусство?",
+    "response": "Способ выражения чувств и идей через живопись, музыку, литературу и т.д.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое пустота?",
+    "response": "Отсутствие содержания, иногда как философское понятие.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как дела?",
+    "response": "Отлично! А у тебя?",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться шить?",
+    "response": "Освой базовые стежки, смотри видео, начинай с простых выкроек.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как завести блог?",
+    "response": "Выбери тему, платформу (YouTube, Telegram, Instagram), снимай или пиши регулярно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "расскажи о своих создателях",
+    "response": "Меня создала команда разработчиков, которые любят ИИ и хотят помогать людям.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как набрать мышечную массу?",
+    "response": "Тренируйся с отягощениями, ешь белок и сложные углеводы, высыпайся.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как починить компьютер?",
+    "response": "Попробуй перезагрузить, проверить кабели, зайти в безопасный режим или вызвать мастера.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое герой?",
+    "response": "Человек, который совершает смелые поступки ради других.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "напиши короткий рассказ",
+    "response": "Кот по имени Барсик нашёл на улице собаку. Они подружились и вместе гуляли каждый день.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое аллергия?",
+    "response": "Это реакция иммунной системы на вещества, которые обычно безвредны, например, пыльцу или шерсть.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое герой?",
+    "response": "Человек, который совершает смелые поступки ради других.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое софт-скиллы?",
+    "response": "Это личные качества: коммуникация, работа в команде, эмоциональный интеллект.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое дождь?",
+    "response": "Атмосферные осадки в виде капель.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как успокоиться перед экзаменом?",
+    "response": "Сделай глубокий вдох, выпей воды, повтори ключевые темы и помни: это просто проверка знаний.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое знание?",
+    "response": "Осознанная информация, проверенная опытом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как улучшить своё прошлое?",
+    "response": "Прости, извлеки уроки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое гравитация?",
+    "response": "Сила притяжения между объектами, которая удерживает нас на Земле.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое искренность?",
+    "response": "Честность и открытость в словах и поступках.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what is AI",
+    "response": "AI is artificial intelligence, machines that learn and think like humans.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "who wrote 'Войну и мир'?",
+    "response": "Роман 'Война и мир' написал Лев Николаевич Толстой.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "how are you",
+    "response": "I'm great, thanks for asking!",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое семья?",
+    "response": "Группа людей, связанных кровью или близостью, поддерживающих друг друга.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "Добавь докстроку\n\nInput:\ndef add(a,b):\n return a+b",
+    "response": "<<<<<<< SEARCH\ndef add(a,b):\n return a+b\n=======\ndef add(a: int, b: int) -> int:\n    \"\"\"Складывает два числа.\"\"\"\n    return a + b\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как стать богатым?",
+    "response": "Инвестируй, создавай ценные навыки, развивай бизнес и управляй рисками.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как правильно дышать животом?",
+    "response": "На вдохе надувай живот, на выдохе втягивай, дыши медленно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дружба?",
+    "response": "Это близкие отношения, основанные на доверии, взаимопомощи и общих интересах.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "how much is 2+2?",
+    "response": "2 + 2 = 4.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как ухаживать за домашним питомцем?",
+    "response": "Корми, гуляй, играй, води к ветеринару, люби.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сдать экзамен на отлично?",
+    "response": "Готовься систематически, повторяй материал, высыпайся перед экзаменом, не паникуй.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как победить лень?",
+    "response": "Начни с малого, мотивируй себя наградой, напоминай о целях.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как похудеть?",
+    "response": "Сбалансированное питание и регулярные физические нагрузки. И главное — пить воду!",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое старость?",
+    "response": "Поздний период жизни с мудростью и опытом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое потеря?",
+    "response": "Утрата чего-то важного, эмоционально болезненная.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое удача?",
+    "response": "Случайное стечение обстоятельств в чью-то пользу.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как сделать кофе по-турецки?",
+    "response": "Смешай мелкий кофе с водой и сахаром в турке, вари на медленном огне до пены.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как говорить уверенно?",
+    "response": "Тренируйся перед зеркалом, знай тему, дыши ровно, не бойся пауз.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться шить?",
+    "response": "Освой базовые стежки, смотри видео, начинай с простых выкроек.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "расскажи о своих создателях",
+    "response": "Меня создала команда разработчиков, которые любят ИИ и хотят помогать людям.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое волшебство?",
+    "response": "Вера в сказку, которую мы создаём сами.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое уют?",
+    "response": "Тепло и комфорт, создаваемый дома.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое школа?",
+    "response": "Место, где люди учатся и социализируются.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить память?",
+    "response": "Учи стихи, играй в мемо, спи достаточно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как ухаживать за комнатными растениями?",
+    "response": "Поливай по графику, протирай листья, обеспечь свет, пересаживай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "сколько лет Вселенной?",
+    "response": "Около 13,8 миллиардов лет.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое облако в IT?",
+    "response": "Серверы и данные, доступные через интернет, например, Google Drive или AWS.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать керамику?",
+    "response": "Запишись на мастер-класс, купи глину, смотри обучалки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться паять?",
+    "response": "Начни с простых схем, используй паяльник и припой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Write a simple HTTP server in Python",
+    "response": "from http.server import HTTPServer, BaseHTTPRequestHandler\nclass Handler(BaseHTTPRequestHandler):\n    def do_GET(self):\n        self.send_response(200)\n        self.end_headers()\n        self.wfile.write(b'Hello')\nHTTPServer(('localhost', 8000), Handler).serve_forever()",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "hello",
+    "response": "Hello! How can I help?",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое дружба между мужчиной и женщиной?",
+    "response": "Возможна, если нет романтических ожиданий и есть взаимное уважение.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться любить себя?",
+    "response": "Заботься, как о лучшем друге.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое крах?",
+    "response": "Полное крушение планов или надежд.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться говорить 'нет'?",
+    "response": "Практикуйся, помни о своих границах, будь вежлив, но твёрд.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое медитация?",
+    "response": "Практика осознанности и концентрации для успокоения ума.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое раскаяние?",
+    "response": "Искреннее сожаление о совершённом поступке.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Explain this code\n\nInput:\ndef fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a+b\n    return a",
+    "response": "This is Fibonacci: it iterates n times, swapping a and b, returns a. Time O(n), space O(1).",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое мама?",
+    "response": "Самый близкий и родной человек.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как называется наша галактика?",
+    "response": "Млечный Путь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое история?",
+    "response": "Наука о прошлом человечества или рассказ о событиях.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое доброта?",
+    "response": "Бескорыстное желание помочь другому человеку.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть честным с собой?",
+    "response": "Задавай трудные вопросы, признавай чувства, живи в согласии с ценностями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дружба крепкая?",
+    "response": "Сквозь годы и расстояние.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как организовать рабочее место?",
+    "response": "Удобный стул, хороший свет, порядок на столе и минимум отвлекающих предметов.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое тьма?",
+    "response": "Отсутствие света, но и место покоя.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как избежать выгорания?",
+    "response": "Делай паузы, чередуй работу и отдых, занимайся хобби, проси помощи.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать комплименты?",
+    "response": "Будь искренним, замечай детали, говори от сердца.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дружба в сети?",
+    "response": "Отношения через интернет, которые тоже могут быть настоящими.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как планировать бюджет?",
+    "response": "Записывай доходы и расходы, выдели 10% на накопления.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое уважение?",
+    "response": "Понимание ценности другого человека.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "расскажи про динозавров",
+    "response": "Динозавры жили на Земле более 65 миллионов лет назад. Самые известные — тираннозавр и стегозавр.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое искусство?",
+    "response": "Способ выражения чувств и идей через живопись, музыку, литературу и т.д.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "write a poem about autumn",
+    "response": "Leaves are falling, wind is cold,\nAutumn paints the world in gold.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться плавать?",
+    "response": "Найди тренера, не бойся воды, учись дышать и делать базовые движения.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое великодушие?",
+    "response": "Способность прощать и давать больше, чем ожидают.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выбрать профессию по душе?",
+    "response": "Слушай внутренний отклик, пробуй стажировки, общайся с людьми из разных сфер.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться видеть хорошее?",
+    "response": "Веди дневник благодарности, замечай маленькие радости.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как полюбить спорт?",
+    "response": "Найди активность по душе, занимайся с друзьями, ставь маленькие цели.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое совесть?",
+    "response": "Внутренний моральный компас, который оценивает поступки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое мода?",
+    "response": "Временные тенденции в одежде и культуре.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой фильм посмотреть?",
+    "response": "Попробуй 'Матрицу', 'Интерстеллар' или 'Побег из Шоушенка'.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое творчество?",
+    "response": "Создание нового, уникального, основанного на фантазии и опыте.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как забыть плохое?",
+    "response": "Замени на новое: хобби, путешествие.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что лучше: Python или Java?",
+    "response": "Зависит от задачи. Python — для анализа данных и скриптов, Java — для крупных корпоративных систем.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "how to cook яичницу?",
+    "response": "Разбей яйца на сковороду с маслом, посоли, жарь на среднем огне 3-5 минут до готовности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как правильно дышать?",
+    "response": "Вдыхай носом, выдыхай ртом, дыши животом — глубоко и медленно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть счастливым?",
+    "response": "Цени маленькое, занимайся любимым делом, будь с близкими, живи осознанно.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "how are you",
+    "response": "I'm great, thanks for asking!",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое цель?",
+    "response": "Желаемый результат, к которому человек стремится.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться делать маникюр?",
+    "response": "Смотри видео, используй инструменты, тренируйся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пишется слово 'не знаю'?",
+    "response": "Правильно: 'не знаю' (раздельно).",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое ИИ?",
+    "response": "ИИ — это искусственный интеллект, способность машин имитировать человеческое мышление и обучение.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Перепиши через list comprehension\n\nInput:\nevens = []\nfor x in nums:\n    if x % 2 == 0:\n        evens.append(x)",
+    "response": "<<<<<<< SEARCH\nevens = []\nfor x in nums:\n    if x % 2 == 0:\n        evens.append(x)\n=======\nevens = [x for x in nums if x % 2 == 0]\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое хаос?",
+    "response": "Состояние беспорядка и непредсказуемости.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "помоги с планом на день",
+    "response": "1. Проснись и сделай зарядку. 2. Позавтракай. 3. Сделай самые сложные задачи до обеда. 4. Обед. 5. Лёгкие дела. 6. Отдых.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать стесняться?",
+    "response": "Тренируйся в разговорах, вспоминай успешные моменты.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как избежать выгорания?",
+    "response": "Делай паузы, чередуй работу и отдых, занимайся хобби, проси помощи.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться кататься на велосипеде?",
+    "response": "Держи равновесие, начинай с простых дорог, не бойся падать.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое рассвет?",
+    "response": "Время восхода солнца, символ нового дня.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое память?",
+    "response": "Способность сохранять и воспроизводить информацию.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "solve equation: 3x = 9",
+    "response": "x = 3, так как 3 * 3 = 9.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перестать лениться?",
+    "response": "Вспомни, зачем тебе цель.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое вдохновение?",
+    "response": "Прилив творческих сил, часто возникает из искусства, природы или общения.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как ухаживать за зубами?",
+    "response": "Чисти дважды в день, используй нить, посещай стоматолога раз в полгода.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое туман?",
+    "response": "Облако у поверхности земли.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое экология?",
+    "response": "Наука о взаимодействии живых организмов с природой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Объясни код\n\nInput:\ndef fib(n):\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a+b\n    return a",
+    "response": "Это Фибоначчи: итерируется n раз, меняет a и b, возвращает a. Сложность O(n).",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое светлячок?",
+    "response": "Жучок, светящийся в темноте.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое мир во всём мире?",
+    "response": "Состояние отсутствия войны и конфликтов между странами.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое книга?",
+    "response": "Источник знаний и эмоций, собранный в письменной форме.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как правильно дышать?",
+    "response": "Вдыхай носом, выдыхай ртом, дыши животом — глубоко и медленно.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое одиночество?",
+    "response": "Состояние, когда человек чувствует себя изолированным.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выбрать книгу?",
+    "response": "Ищи по жанру, читай отзывы, смотри рекомендации, пробуй первые главы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "кто такой Пушкин?",
+    "response": "Великий русский поэт, автор 'Евгения Онегина', 'Руслана и Людмилы' и многих стихов.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой язык самый лёгкий?",
+    "response": "Эсперанто создан как лёгкий, но из естественных — испанский или итальянский.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое мудрость?",
+    "response": "Способность применять знания и опыт в сложных ситуациях.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пережить неудачу?",
+    "response": "Извлеки урок, прости себя, поднимись и двигайся дальше.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перестать нервничать?",
+    "response": "Переключи внимание, выпей воды, посчитай в уме.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое философия?",
+    "response": "Наука о смысле жизни, познании, добре и зле.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое культура?",
+    "response": "Совокупность достижений человечества в искусстве, науке, быту.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться играть на фортепиано?",
+    "response": "Начни с гамм, учи ноты, играй простые мелодии.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое вера?",
+    "response": "Глубокая уверенность в чём-то бездоказательном.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти работу?",
+    "response": "Составь резюме, ищи на hh.ru, LinkedIn, в Telegram-каналах, проходи собеседования.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как называется столица Франции?",
+    "response": "Париж.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "кто такой Шерлок Холмс?",
+    "response": "Вымышленный частный детектив из произведений Артура Конан Дойла.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое листва?",
+    "response": "Листья деревьев.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "привет",
+    "response": "Привет! Чем могу помочь?",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое команда?",
+    "response": "Группа людей, которые работают вместе для достижения общей цели.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое язык?",
+    "response": "Система знаков для общения между людьми.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать бояться критики?",
+    "response": "Отделяй конструктивное от необоснованного.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое время?",
+    "response": "Физическая величина, показывающая последовательность событий.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "tell a joke",
+    "response": "Why do programmers prefer dark mode? Because light attracts bugs!",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое ум?",
+    "response": "Способность мыслить, анализировать и принимать решения.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое поддержка?",
+    "response": "Действие, когда ты помогаешь другому словом или делом.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сделать уборку быстрой?",
+    "response": "Убирай по зонам, используй таймер, избавься от хлама, привлекай семью.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти друзей?",
+    "response": "Запишись в кружки по интересам, участвуй в волонтёрстве и не бойся первым начать диалог.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как бороться с тревогой?",
+    "response": "Дыши, медитируй, отвлекайся, пиши мысли, говори с доверенным человеком.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить осанку?",
+    "response": "Держи спину прямо, делай упражнения на пресс и спину, не сутулься за столом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как перестать сравнивать себя с другими?",
+    "response": "Сосредоточься на своём прогрессе, помни, что у каждого свой путь.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "расскажи шутку",
+    "response": "Почему программисты путают Хэллоуин и Рождество? Потому что 31 Oct = 25 Dec.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как понять, что ты влюблён?",
+    "response": "Ты постоянно думаешь о человеке, радуешься его вниманию, хочешь быть рядом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое честь?",
+    "response": "Моральное достоинство, верность принципам.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое тайна?",
+    "response": "То, что пока не раскрыто.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить почерк?",
+    "response": "Пиши медленно, следи за наклоном, используй качественную ручку, тренируйся.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "tell a joke",
+    "response": "Why do programmers prefer dark mode? Because light attracts bugs!",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "Исправь баг в функции сложения\n\nInput:\ndef add(a, b):\n    return a - b",
+    "response": "<<<<<<< SEARCH\ndef add(a, b):\n    return a - b\n=======\ndef add(a, b):\n    return a + b\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как пережить экзамен?",
+    "response": "Повторяй, спи, завтракай, дыши глубоко и помни: это всего один день.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое иллюзия?",
+    "response": "Искажённое восприятие реальности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое чудо?",
+    "response": "Нечто необъяснимое, вызывающее изумление и радость.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как приготовить яичницу?",
+    "response": "Разбей яйца на сковороду с маслом, посоли, жарь на среднем огне 3-5 минут до готовности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как полюбить себя?",
+    "response": "Принимай свои недостатки, ухаживай за собой, ставь личные границы, хвали себя за успехи.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое истина?",
+    "response": "Объективная реальность, познаваемая человеком.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое свобода?",
+    "response": "Возможность выбирать и действовать без принуждения.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое криптовалюта?",
+    "response": "Это цифровые деньги, которые работают на технологии блокчейн, например, биткоин.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как быть добрее?",
+    "response": "Каждый день делай одно доброе дело безвозмездно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать зависать в телефоне?",
+    "response": "Установи лимиты, убирай приложения с главного экрана.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "какой спорт полезнее?",
+    "response": "Любой, который нравится. Плавание, бег и йога — отличный выбор.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Добавь обработку ошибок для чтения файла\n\nInput:\ndef read_file(path):\n    return open(path).read()",
+    "response": "<<<<<<< SEARCH\ndef read_file(path):\n    return open(path).read()\n=======\ndef read_file(path):\n    try:\n        with open(path) as f:\n            return f.read()\n    except FileNotFoundError:\n        return None\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Оптимизируй цикл\n\nInput:\nresult = []\nfor i in range(len(items)):\n    result.append(items[i] * 2)",
+    "response": "<<<<<<< SEARCH\nresult = []\nfor i in range(len(items)):\n    result.append(items[i] * 2)\n=======\nresult = [x * 2 for x in items]\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить отношения с родителями?",
+    "response": "Говори о чувствах, слушай их, уважай их опыт, проводи время вместе.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти работу?",
+    "response": "Составь резюме, ищи на hh.ru, LinkedIn, в Telegram-каналах, проходи собеседования.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "кто такой Шерлок Холмс?",
+    "response": "Вымышленный частный детектив из произведений Артура Конан Дойла.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое юмор?",
+    "response": "Способность видеть смешное в нелепых или неожиданных ситуациях.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое витамины?",
+    "response": "Органические вещества, необходимые для здоровья. Их много в овощах и фруктах.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как выбрать профессию?",
+    "response": "Прислушайся к себе: что тебе нравится делать, что у тебя получается и что востребовано на рынке.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое терпение?",
+    "response": "Способность ждать и сохранять спокойствие в трудных ситуациях.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как помочь бездомным?",
+    "response": "Пожертвуй в приют, накорми, помоги с документами, волонтёрствуй.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как не обижаться?",
+    "response": "Помни, что обида — это выбор. Прощай и отпускай.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как улучшить память в пожилом возрасте?",
+    "response": "Решай кроссворды, учи, общайся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать пазлы?",
+    "response": "Начни с краёв, смотри на рисунок.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое гордость?",
+    "response": "Чувство собственного достоинства, может быть как позитивным, так и негативным.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое прогресс?",
+    "response": "Движение вперёд к улучшению условий жизни или знаний.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "write a poem about autumn",
+    "response": "Leaves are falling, wind is cold,\nAutumn paints the world in gold.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как улучшить отношения в коллективе?",
+    "response": "Уважай, общайся открыто, решай проблемы конструктивно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "tell a joke",
+    "response": "Why do programmers prefer dark mode? Because light attracts bugs!",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое закат?",
+    "response": "Красивое время уходящего солнца.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как сделать мир лучше?",
+    "response": "Начни с себя: будь добрее, помогай другим, береги природу.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться программировать?",
+    "response": "Начни с простого языка (Python), смотри туториалы, решай задачи на Codewars и пиши свои проекты.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое фильм?",
+    "response": "История, рассказанная через изображение.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое философия?",
+    "response": "Наука о смысле жизни, познании, добре и зле.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое чувство юмора?",
+    "response": "Способность находить смешное и делать жизнь легче.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выбрать хобби?",
+    "response": "Попробуй всё, что хоть немного интересует, методом исключения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выбрать книгу?",
+    "response": "Ищи по жанру, читай отзывы, смотри рекомендации, пробуй первые главы.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как укрепить иммунитет?",
+    "response": "Ешь витамины, бывай на солнце, спи, избегай стресса.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти друзей?",
+    "response": "Запишись в кружки по интересам, участвуй в волонтёрстве и не бойся первым начать диалог.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как стать самостоятельным?",
+    "response": "Принимай решения, бери ответственность, учись бытовым навыкам.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать мясо?",
+    "response": "Маринуй, не пережаривай, дай отдохнуть.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дух?",
+    "response": "Внутренняя сущность человека, характер.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what is AI",
+    "response": "AI is artificial intelligence, machines that learn and think like humans.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как развить мышление?",
+    "response": "Решай логические задачи, играй в шахматы, учи новое.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое NFT?",
+    "response": "Цифровые сертификаты на уникальные предметы в блокчейне, например, искусство.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как перестать бояться ошибок?",
+    "response": "Воспринимай их как опыт, который ведёт к росту.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться прыгать на скакалке?",
+    "response": "Начни с медленных прыжков, держи локти близко, крути запястьями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как вырастить цветы?",
+    "response": "Поливай, давай свет, удобряй, защищай от вредителей, люби свои растения.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как улучшить гибкость?",
+    "response": "Делай растяжку каждый день, занимайся йогой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать блюда из овощей?",
+    "response": "Начни с рагу, запекай, добавляй соусы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "помоги с планом на день",
+    "response": "1. Проснись и сделай зарядку. 2. Позавтракай. 3. Сделай самые сложные задачи до обеда. 4. Обед. 5. Лёгкие дела. 6. Отдых.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое природа?",
+    "response": "Окружающий мир, включая растения, животных и ландшафты.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "hello",
+    "response": "Hello! How can I help?",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "как выучить новый язык?",
+    "response": "Погружение в среду: песни, фильмы, разговоры с носителями, ежедневная практика.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое дружба между мужчиной и женщиной?",
+    "response": "Возможна, если нет романтических ожиданий и есть взаимное уважение.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как набрать мышечную массу?",
+    "response": "Тренируйся с отягощениями, ешь белок и сложные углеводы, высыпайся.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое информация?",
+    "response": "Данные, которые несут смысл.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как найти мотивацию?",
+    "response": "Вспомни свои цели, разбей их на шаги, представь результат.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое ветер?",
+    "response": "Движение воздуха.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое озеро?",
+    "response": "Закрытый водоём с пресной водой.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как развить речь?",
+    "response": "Читай вслух, пересказывай, обсуждай, учи стихи и записывай себя.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое созерцание?",
+    "response": "Размышление при взгляде на природу или искусство.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what is love?",
+    "response": "Любовь — это глубокое чувство привязанности, заботы и уважения к другому человеку.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "Refactor to use list comprehension\n\nInput:\nevens = []\nfor x in nums:\n    if x % 2 == 0:\n        evens.append(x)",
+    "response": "<<<<<<< SEARCH\nevens = []\nfor x in nums:\n    if x % 2 == 0:\n        evens.append(x)\n=======\nevens = [x for x in nums if x % 2 == 0]\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "Add type hints to function\n\nInput:\ndef greet(name):\n    return f'Hello {name}'",
+    "response": "<<<<<<< SEARCH\ndef greet(name):\n    return f'Hello {name}'\n=======\ndef greet(name: str) -> str:\n    return f'Hello {name}'\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое ум?",
+    "response": "Способность мыслить, анализировать и принимать решения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "tell a joke",
+    "response": "Why do programmers prefer dark mode? Because light attracts bugs!",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое личность?",
+    "response": "Совокупность психологических и социальных качеств человека.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как улучшить отношения с братом/сестрой?",
+    "response": "Проводите время вместе, обсуждайте, поддерживайте.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое судьба?",
+    "response": "Вера в предначертанность событий.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое софт-скиллы?",
+    "response": "Это личные качества: коммуникация, работа в команде, эмоциональный интеллект.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как стирать джинсы?",
+    "response": "Выверни наизнанку, стирай в холодной воде, суши без сушилки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выбрать подарок?",
+    "response": "Учитывай интересы человека, дари эмоции, а не вещь.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое уверенность?",
+    "response": "Вера в собственные силы и возможности.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться молиться?",
+    "response": "Найди тихое место, будь искренним, выражай благодарность.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое раскаяние?",
+    "response": "Искреннее сожаление о совершённом поступке.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как читать книги быстрее?",
+    "response": "Тренируй периферическое зрение, не проговаривай слова.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое энергия?",
+    "response": "Способность совершать работу, существует в разных формах: тепловая, электрическая и т.д.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как приучить кота к лотку?",
+    "response": "Поставь лоток в тихое место, покажи коту его, хвали за успехи, не ругай за ошибки.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дети?",
+    "response": "Маленькие люди, наши продолжения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое время?",
+    "response": "Физическая величина, показывающая последовательность событий.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое доброта?",
+    "response": "Бескорыстное желание помочь другому человеку.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "сколько дней в году?",
+    "response": "Обычно 365, а в високосный — 366.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как улучшить память?",
+    "response": "Тренируй мозг: учи стихи, решай головоломки, спи достаточно и питайся правильно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться петь?",
+    "response": "Дыши диафрагмой, занимайся вокалом, слушай себя.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как развить речь?",
+    "response": "Читай вслух, пересказывай, обсуждай, учи стихи и записывай себя.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться делать трюки на скейте?",
+    "response": "Начни с баланса, смотри видео, не бойся падений.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое дерево?",
+    "response": "Растение с стволом и кроной.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое прогресс?",
+    "response": "Движение вперёд к улучшению условий жизни или знаний.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое осознанность?",
+    "response": "Понимание текущего момента без оценок.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как выучить новый язык?",
+    "response": "Погружение в среду: песни, фильмы, разговоры с носителями, ежедневная практика.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "what is AI",
+    "response": "AI is artificial intelligence, machines that learn and think like humans.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как научиться делать букеты?",
+    "response": "Изучи сочетание цветов, форм, добавляй зелень.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как не завидовать?",
+    "response": "Фокусируйся на себе, благодари за своё, работай над целями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое хороший день?",
+    "response": "День, наполненный маленькими радостями, улыбками и достижениями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Напиши функцию чтения JSON",
+    "response": "import json\ndef load_json(path):\n    with open(path) as f:\n        return json.load(f)",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать инвестиции?",
+    "response": "Изучи основы рынка, консультируйся, начинай с малого.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "tell a joke",
+    "response": "Why do programmers prefer dark mode? Because light attracts bugs!",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое бесконечность?",
+    "response": "Понятие безграничности в математике или философии.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "напиши стих про осень",
+    "response": "Листья кружатся, дождь стучит,\nОсень золотом горит.\nХолод по утрам стоит,\nПтиц далёких жалкий крик.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как правильно благодарить?",
+    "response": "Скажи искреннее 'спасибо' и объясни, за что именно.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое радость?",
+    "response": "Чувство удовольствия от приятных событий.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое ИИ?",
+    "response": "ИИ — это искусственный интеллект, способность машин имитировать человеческое мышление и обучение.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое согласие?",
+    "response": "Принятие общей точки зрения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое чувство?",
+    "response": "Внутреннее переживание.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "how are you",
+    "response": "I'm great, thanks for asking!",
+    "category": "everyday",
+    "lang": "en"
+  },
+  {
+    "instruction": "Добавь аннотации типов\n\nInput:\ndef greet(name):\n    return f'Привет {name}'",
+    "response": "<<<<<<< SEARCH\ndef greet(name):\n    return f'Привет {name}'\n=======\ndef greet(name: str) -> str:\n    return f'Привет {name}'\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое предрассудок?",
+    "response": "Заранее сложившееся негативное мнение.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как восстановить энергию?",
+    "response": "Отдыхай, спи, гуляй на природе, общайся с приятными людьми.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое криптовалюта?",
+    "response": "Это цифровые деньги, которые работают на технологии блокчейн, например, биткоин.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как не ссориться с близкими?",
+    "response": "Слушай до конца, избегай критики, говори о своих чувствах, ищи компромисс.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "какой спорт полезнее?",
+    "response": "Любой, который нравится. Плавание, бег и йога — отличный выбор.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как организовать вечеринку?",
+    "response": "Выбери тему, пригласи гостей, приготовь еду, музыку и игры.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое тишина?",
+    "response": "Отсутствие звуков, время для внутреннего покоя.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое надежда?",
+    "response": "Вера в лучшее будущее, несмотря на трудности.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как стать богатым?",
+    "response": "Инвестируй, создавай ценные навыки, развивай бизнес и управляй рисками.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое чёрная дыра?",
+    "response": "Область пространства с огромной гравитацией, откуда даже свет не может вырваться.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как научиться делать булочки?",
+    "response": "Замеси тесто, сделай шарики, выпекай.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как путешествовать дешево?",
+    "response": "Покупай билеты заранее, ищи бюджетное жильё, пользуйся местным транспортом.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "что такое свобода?",
+    "response": "Возможность выбирать и действовать без принуждения.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как строить отношения?",
+    "response": "Слушай, уважай, доверяй, проводи время вместе, решай конфликты мирно.",
+    "category": "general",
+    "lang": "en"
+  },
+  {
+    "instruction": "как выбрать хобби?",
+    "response": "Перечисли, что нравится, попробуй несколько, смотри мастер-классы.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как полюбить спорт?",
+    "response": "Найди активность по душе, занимайся с друзьями, ставь маленькие цели.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть интересным собеседником?",
+    "response": "Читай, путешествуй, слушай, задавай вопросы, делись впечатлениями.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как быть внимательным?",
+    "response": "Тренируй концентрацию, делай упражнения на внимание.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "что такое уникальность?",
+    "response": "Неповторимость каждого человека.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как создать сайт?",
+    "response": "Изучи HTML, CSS и JavaScript. Для начала используй конструкторы вроде Tilda или WordPress.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "как полюбить себя?",
+    "response": "Принимай свои недостатки, ухаживай за собой, ставь личные границы, хвали себя за успехи.",
+    "category": "general",
+    "lang": "ru"
+  },
+  {
+    "instruction": "Optimize loop for performance\n\nInput:\nresult = []\nfor i in range(len(items)):\n    result.append(items[i] * 2)",
+    "response": "<<<<<<< SEARCH\nresult = []\nfor i in range(len(items)):\n    result.append(items[i] * 2)\n=======\nresult = [x * 2 for x in items]\n>>>>>>> REPLACE",
+    "category": "code",
+    "lang": "en"
+  }
+]
