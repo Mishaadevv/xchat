@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Brain, Play, Square, Trash2, Upload, Database, Settings2, BarChart3, BookOpen, CheckCircle2, AlertCircle, Clock, Plus, Languages, Code2, Eye } from "lucide-react";
+import { Brain, Play, Square, Trash2, Upload, Database, Settings2, BarChart3, BookOpen, CheckCircle2, AlertCircle, Clock, Plus, Languages, Code2, Eye, RefreshCw } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -189,6 +189,11 @@ export function TrainingPage() {
                       <label className="text-xs font-medium">{i18n.t("training.base_model")}</label>
                       <Input value={config.base_model || ""} onChange={(e) => setConfig({ ...config, base_model: e.target.value })}
                         placeholder="Qwen/Qwen2.5-7B-Instruct" className="text-sm h-9" />
+                      <p className="text-xs text-muted-foreground">
+                        {locale === "ru"
+                          ? "Hugging Face id, папка с config.json или своя обученная модель — адаптер объединится с весами базы, и обучение продолжится."
+                          : "Hugging Face id, a folder with config.json, or your own trained model — the adapter is merged into the base weights and training continues."}
+                      </p>
                     </div>
                   )}
                   <div className="space-y-1.5">
@@ -344,6 +349,18 @@ export function TrainingPage() {
                             m.status.includes("ready") ? "bg-emerald-100 text-emerald-700" : "bg-secondary text-muted-foreground")}>
                             {m.status}
                           </span>
+                          <button
+                            onClick={() => {
+                              setConfig({ ...config, base_model: m.path, name: `${m.name}-continued` });
+                              setActiveTab("train");
+                            }}
+                            title={locale === "ru"
+                              ? "Дообучить эту модель: адаптер объединяется с весами базовой модели, и обучение продолжается"
+                              : "Fine-tune this model further: the adapter is merged into the base weights and training continues"}
+                            className="h-8 px-2.5 flex items-center gap-1 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+                            <RefreshCw className="h-3.5 w-3.5" />
+                            {locale === "ru" ? "Дообучить" : "Continue"}
+                          </button>
                           <button onClick={() => trainingStore.deleteModel(m.id)}
                             className="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors">
                             <Trash2 className="h-4 w-4" />

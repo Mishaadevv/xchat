@@ -1,8 +1,44 @@
 ﻿import json
+import re
 import time
 from pathlib import Path
 
 from training_data import extract_lora_texts, load_records
+
+
+def _resolve_base_from_adapter(base_model: str, emit):
+    """Resolve the real base model when the given source is a PEFT adapter.
+
+    Any model trained here as LoRA/QLoRA is an adapter on top of a base; loading
+    such a folder directly fails because it has no config.json. Point training
+    at it and it continues from there: the base is loaded, the adapter is merged
+    into the weights, and a new adapter is trained on the result. Works for any
+    adapter folder, not only models trained by this app.
+    """
+    folder = Path(base_model)
+    adapter_config_path = folder / "adapter_config.json"
+    if not adapter_config_path.is_file():
+        return base_model
+    try:
+        adapter_config = json.loads(adapter_config_path.read_text(encoding="utf-8", errors="replace"))
+    except Exception:
+        adapter_config = {}
+    base = str(adapter_config.get("base_model_name_or_path") or "").strip()
+    if not base:
+        raise ValueError(
+            f"'{base_model}' is a LoRA adapter without base_model_name_or_path; "
+            "the base model it was trained on cannot be determined."
+        )
+    if not (Path(base).is_dir() or re.match(r"^[\w.\-]+/[\w.\-]+$", base)):
+        raise ValueError(f"The adapter's base model '{base}' is not a valid model id or folder.")
+    emit("training-status", {
+        "message": (
+            f"'{folder.name}' is a LoRA adapter on top of '{base}'. Loading the base "
+            "model, merging the adapter into the weights, then attaching a new adapter."
+        ),
+        "phase": "adapter_merge",
+    })
+    return base
 
 
 def _detect_target_modules(model):
@@ -65,6 +101,10 @@ def train_lora(config: dict, output_dir: str, emit, stop_requested):
     base_model = config.get("base_model")
     if not base_model:
         raise ValueError("base_model is required for LoRA mode")
+    # A trained model folder may itself be a LoRA adapter; resolve it to its
+    # base so training continues from the merged weights.
+    adapter_source = base_model
+    base_model = _resolve_base_from_adapter(base_model, emit)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     emit("training-status", {"message": f"Device: {device.upper()}", "phase": "device"})
@@ -77,6 +117,14 @@ def train_lora(config: dict, output_dir: str, emit, stop_requested):
     use_4bit = bool(config.get("use_4bit", False)) or quantization == "4bit"
     use_8bit = bool(config.get("use_8bit", False)) or quantization == "8bit"
     use_quant = (use_4bit or use_8bit) and device == "cuda"
+    if use_quant and Path(adapter_source).is_dir() and adapter_source != base_model:
+        # merge_and_unload cannot fold an adapter into bitsandbytes-quantized
+        # weights, so a merged continuation runs in full precision instead.
+        emit("training-status", {
+            "message": "Quantization is skipped when continuing from a merged adapter; training runs in full precision.",
+            "phase": "warning",
+        })
+        use_quant = use_4bit = use_8bit = False
 
     bnb_cfg = None
     if use_quant:
@@ -108,6 +156,15 @@ def train_lora(config: dict, output_dir: str, emit, stop_requested):
     model = AutoModelForCausalLM.from_pretrained(base_model, **load_kwargs)
     if device == "cpu":
         model = model.to("cpu")
+
+    # Continue from a previously trained adapter: fold it into the weights so
+    # the new adapter starts where the last run stopped.
+    if Path(adapter_source).is_dir() and adapter_source != base_model:
+        from peft import PeftModel
+
+        emit("training-status", {"message": f"Merging the trained adapter from {adapter_source}", "phase": "adapter_merge"})
+        model = PeftModel.from_pretrained(model, adapter_source)
+        model = model.merge_and_unload()
 
     if use_quant:
         model = prepare_model_for_kbit_training(model)
