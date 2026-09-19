@@ -1,5 +1,6 @@
 import { providerService } from "./providers";
 import { formatBytes, streamDownloadToFile } from "./downloads";
+import { reportEngineContext, reportSelectedContext } from "./contextWindow";
 
 export type RuntimeStatus = "missing" | "stopped" | "starting" | "running" | "error";
 
@@ -396,6 +397,23 @@ export const localRuntime = {
       set({ status: "error", message: "Engine did not answer /health in 120s — see log below" });
       return false;
     }
+
+    // The real context window is whatever the engine actually started with —
+    // read it back from the server instead of trusting the requested value.
+    let engineCtx = 0;
+    try {
+      const propsRes = await fetch(`${baseUrl}/props`, { signal: AbortSignal.timeout(5000) });
+      if (propsRes.ok) {
+        const props: any = await propsRes.json();
+        engineCtx = Number(props?.default_generation_settings?.n_ctx)
+          || Number(props?.n_ctx)
+          || Number(props?.model?.n_ctx)
+          || 0;
+        if (engineCtx > 0) reportEngineContext(engineCtx);
+      }
+    } catch {}
+    // Only fall back to the requested size when the engine did not answer.
+    if (!engineCtx && opts?.ctx) reportSelectedContext(opts.ctx);
 
     providerService.updateProvider("llamacpp", {
       baseUrl: `${baseUrl}/v1`,

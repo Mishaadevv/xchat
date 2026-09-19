@@ -6,6 +6,14 @@ export interface StreamCallbacks {
   onToken: (token: string) => void;
   onDone: (fullText: string) => void;
   onError: (error: string) => void;
+  /** Real token usage reported by the server (prompt/completion tokens). */
+  onUsage?: (usage: TokenUsage) => void;
+}
+
+export interface TokenUsage {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
 }
 
 export interface StreamOptions {
@@ -259,6 +267,16 @@ async function streamOpenAI(
           callbacks.onToken(delta.content);
         }
 
+        // llama.cpp, vLLM, LM Studio, OpenRouter, Groq and most OpenAI-compatible
+        // servers include real token usage on the final streaming chunk.
+        if (parsed.usage && callbacks.onUsage) {
+          callbacks.onUsage({
+            prompt_tokens: Number(parsed.usage.prompt_tokens) || 0,
+            completion_tokens: Number(parsed.usage.completion_tokens) || 0,
+            total_tokens: Number(parsed.usage.total_tokens) || 0,
+          });
+        }
+
         if (delta.tool_calls) {
           for (const tc of delta.tool_calls) {
             let acc = toolCalls.get(tc.index);
@@ -342,6 +360,22 @@ async function streamOpenAI(
   return fullText;
 }
 
+/** Anthropic reports input tokens in message_start and output tokens in
+ *  message_delta — combine them into one OpenAI-shaped usage event. */
+function emitAnthropicUsage(
+  onUsage: (usage: TokenUsage) => void,
+  usage: { input_tokens?: number; output_tokens?: number }
+) {
+  const prompt = Number(usage.input_tokens) || 0;
+  const completion = Number(usage.output_tokens) || 0;
+  if (!prompt && !completion) return;
+  onUsage({
+    prompt_tokens: prompt,
+    completion_tokens: completion,
+    total_tokens: prompt + completion,
+  });
+}
+
 async function streamAnthropic(
   provider: ProviderConfig,
   model: string,
@@ -393,6 +427,7 @@ async function streamAnthropic(
   const toolCalls: Map<number, { id: string; name: string; json: string }> = new Map();
   let currentToolIndex: number | null = null;
   let stopReason: string | null = null;
+  let lastAnthropicUsage: any = {};
 
   while (true) {
     const { done, value } = await reader.read();
@@ -438,6 +473,17 @@ async function streamAnthropic(
           currentToolIndex = null;
         } else if (parsed.type === "message_delta") {
           stopReason = parsed.delta?.stop_reason || null;
+          // Real usage arrives with message_delta (usage.output_tokens) or
+          // message_start (usage.input_tokens).
+          if (callbacks.onUsage) {
+            const usage: any = { ...lastAnthropicUsage };
+            if (parsed.usage?.output_tokens) usage.output_tokens = parsed.usage.output_tokens;
+            if (usage.input_tokens || usage.output_tokens) emitAnthropicUsage(callbacks.onUsage, usage);
+          }
+        } else if (parsed.type === "message_start") {
+          if (parsed.message?.usage && callbacks.onUsage) {
+            lastAnthropicUsage = { ...(parsed.message.usage as any) };
+          }
         } else if (parsed.type === "message_stop") {
           // end
         } else if (parsed.delta?.text) {
@@ -581,7 +627,20 @@ async function streamOllama(
             }
           }
         }
-        if (parsed.done) { doneStreaming = true; break; }
+        if (parsed.done) {
+          doneStreaming = true;
+          // Real counts: prompt_eval_count = prompt tokens, eval_count = completion.
+          if (callbacks.onUsage && (parsed.prompt_eval_count || parsed.eval_count)) {
+            const prompt = Number(parsed.prompt_eval_count) || 0;
+            const completion = Number(parsed.eval_count) || 0;
+            callbacks.onUsage({
+              prompt_tokens: prompt,
+              completion_tokens: completion,
+              total_tokens: prompt + completion,
+            });
+          }
+          break;
+        }
       } catch {}
     }
     if (doneStreaming) break;
@@ -711,6 +770,15 @@ async function streamResponsesAPI(
         if (parsed.type === "response.output_text.delta" && parsed.delta) {
           fullText += parsed.delta;
           callbacks.onToken(parsed.delta);
+        } else if (parsed.type === "response.completed" && parsed.response?.usage && callbacks.onUsage) {
+          const u = parsed.response.usage;
+          const prompt = Number(u.input_tokens ?? u.prompt_tokens) || 0;
+          const completion = Number(u.output_tokens ?? u.completion_tokens) || 0;
+          callbacks.onUsage({
+            prompt_tokens: prompt,
+            completion_tokens: completion,
+            total_tokens: Number(u.total_tokens) || prompt + completion,
+          });
         } else if (parsed.delta?.content && Array.isArray(parsed.delta.content)) {
           // Some variants
           for (const block of parsed.delta.content) {

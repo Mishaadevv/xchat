@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, FileText, Cpu, BarChart3, ScrollText, BookOpen, Wifi, FolderOpen, Folder, Trash2, RefreshCw, CheckCircle2, Circle, Plus } from "lucide-react";
 import { useStore } from "@/lib/useStore";
@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getEnabledTools } from "@/services/mcp";
 import { cn } from "@/lib/utils";
+import { getUnifiedContextUsage } from "@/services/contextWindow";
 
 const sections = [
   { id: "tasks", icon: CheckCircle2, label: "Tasks" },
@@ -26,7 +27,7 @@ const sections = [
 
 export function RightPanel() {
   const { rightPanelOpen } = useStore(appStore.subscribe, appStore.getState);
-  const { messages, model, provider, temperature, systemPrompt, maxContextTokens, internetMode, thinkingMode } = useStore(chatStore.subscribe, chatStore.getState);
+  const { messages, model, provider, temperature, systemPrompt, maxContextTokens, internetMode, thinkingMode, isStreaming, streamingContent } = useStore(chatStore.subscribe, chatStore.getState);
   const { activeChatId, chats } = useStore(sidebarStore.subscribe, sidebarStore.getState);
   const activeChat = chats.find((c) => c.id === activeChatId);
   const [activeSection, setActiveSection] = useState("info");
@@ -52,8 +53,15 @@ export function RightPanel() {
   const enabledTools = getEnabledTools();
   const currentProject = activeChat?.projectId ? projectService.get(activeChat.projectId) : null;
 
-  const totalTokens = messages.reduce((sum, m) => sum + (m.tokenCount ?? Math.ceil(m.content.length / 4)), 0);
-  const contextPct = Math.min((totalTokens / maxContextTokens) * 100, 100);
+  // Same live source as the header ring: server-reported tokens when the
+  // server gives them, live estimate otherwise, streaming text included.
+  const unifiedContext = useMemo(
+    () => getUnifiedContextUsage(model, messages, isStreaming ? streamingContent : "", maxContextTokens),
+    [model, messages, isStreaming, streamingContent, maxContextTokens],
+  );
+  const totalTokens = unifiedContext.used;
+  const maxContext = unifiedContext.total;
+  const contextPct = unifiedContext.percentage;
 
   const savePrompt = () => {
     chatStore.setSystemPrompt(promptDraft);
@@ -431,7 +439,10 @@ export function RightPanel() {
                     <div>
                       <div className="flex justify-between text-xs mb-1.5">
                         <span className="text-muted-foreground">Used</span>
-                        <span className="font-medium tabular-nums">{totalTokens.toLocaleString()} / {maxContextTokens.toLocaleString()}</span>
+                        <span className="font-medium tabular-nums">
+                          {totalTokens.toLocaleString()} / {maxContext.toLocaleString()}
+                          {unifiedContext.source === "server" ? " · exact" : " · est"}
+                        </span>
                       </div>
                       <div className="h-2 bg-secondary rounded-full overflow-hidden">
                         <div className={cn("h-full rounded-full transition-all", contextPct > 80 ? "bg-amber-500" : contextPct > 95 ? "bg-destructive" : "bg-primary")}

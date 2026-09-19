@@ -183,3 +183,122 @@ export function getModelContextUsage(
     percentage: Math.min(100, Math.round((totalTokens / total) * 100)),
   };
 }
+
+// ── Real server usage + unified live context state ───────────────────────────
+
+export interface LiveContextState {
+  /** Tokens actually counted by the server for the last request (null when
+   *  the server did not report usage — then the estimate is shown). */
+  serverPromptTokens: number | null;
+  serverCompletionTokens: number | null;
+  /** The context window the model is actually running with right now. */
+  total: number;
+  /** Where `total` came from, so the UI can be honest about it. */
+  totalSource: "engine" | "selected" | "model-table";
+}
+
+let liveState: LiveContextState = {
+  serverPromptTokens: null,
+  serverCompletionTokens: null,
+  total: CONTEXT_SIZES["_default"],
+  totalSource: "model-table",
+};
+
+const liveListeners = new Set<() => void>();
+
+function notifyLive() {
+  liveListeners.forEach((l) => l());
+}
+
+/** Record real token usage from the server's final stream chunk. */
+export function reportServerUsage(promptTokens: number, completionTokens: number): void {
+  if (!promptTokens && !completionTokens) return;
+  liveState = {
+    ...liveState,
+    serverPromptTokens: promptTokens,
+    serverCompletionTokens: completionTokens,
+  };
+  notifyLive();
+}
+
+/** Drop server counts — a new message/chat makes them stale, so the live
+ *  estimate takes over until the next real usage arrives. */
+export function resetServerUsage(): void {
+  if (liveState.serverPromptTokens == null && liveState.serverCompletionTokens == null) return;
+  liveState = { ...liveState, serverPromptTokens: null, serverCompletionTokens: null };
+  notifyLive();
+}
+
+/** Record the context window the local engine reports it is running with. */
+export function reportEngineContext(totalTokens: number): void {
+  if (!totalTokens || totalTokens <= 0) return;
+  if (liveState.total === totalTokens && liveState.totalSource === "engine") return;
+  liveState = { ...liveState, total: totalTokens, totalSource: "engine" };
+  notifyLive();
+}
+
+/** The user picked a context size for a local provider (ChatInput selector). */
+export function reportSelectedContext(totalTokens: number): void {
+  if (!totalTokens || totalTokens <= 0) return;
+  liveState = { ...liveState, total: totalTokens, totalSource: "selected" };
+  notifyLive();
+}
+
+/** Keep the window size in sync when the model changes. */
+export function reportModelChanged(model: string): void {
+  const total = getContextSize(model);
+  if (liveState.totalSource !== "engine" && liveState.totalSource !== "selected") {
+    liveState = { ...liveState, total, totalSource: "model-table" };
+    notifyLive();
+  }
+  // A new model invalidates the previous server counts.
+  liveState = { ...liveState, serverPromptTokens: null, serverCompletionTokens: null };
+  notifyLive();
+}
+
+export function subscribeLiveContext(listener: () => void): () => void {
+  liveListeners.add(listener);
+  return () => liveListeners.delete(listener);
+}
+
+export function getLiveContextState(): LiveContextState {
+  return liveState;
+}
+
+/**
+ * The single source of truth both the header ring and the Context Usage panel
+ * render. Server-reported tokens win; while streaming (and whenever the server
+ * did not report usage) a live estimate of the visible conversation is used so
+ * the number moves in real time.
+ */
+export function getUnifiedContextUsage(
+  model: string,
+  messages: { content: string; role: string }[],
+  streamingContent?: string,
+  selectedContextTokens?: number,
+): { used: number; total: number; percentage: number; live: boolean; source: string } {
+  const state = getLiveContextState();
+  const total = state.totalSource === "engine" || state.totalSource === "selected"
+    ? state.total
+    : (selectedContextTokens && selectedContextTokens > 0 ? selectedContextTokens : state.total);
+
+  // Estimate over the whole conversation, streaming text included — this is
+  // what updates every token.
+  let estimated = 0;
+  for (const msg of messages) {
+    estimated += 4 + estimateTokens(msg.content);
+  }
+  if (streamingContent) estimated += estimateTokens(streamingContent);
+
+  const server = state.serverPromptTokens;
+  const used = server != null && server > 0 ? server + (state.serverCompletionTokens ?? 0) + estimateTokens(streamingContent ?? "") : estimated;
+  const source = server != null && server > 0 ? "server" : "estimate";
+
+  return {
+    used,
+    total,
+    percentage: Math.min(100, Math.round((used / Math.max(1, total)) * 100)),
+    live: Boolean(streamingContent),
+    source,
+  };
+}

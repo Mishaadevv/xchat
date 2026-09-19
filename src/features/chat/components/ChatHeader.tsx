@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { PanelRightOpen, Lock, Unlock, ChevronDown, Search, Folder, FolderOpen, Plus, Trash2, Check, ExternalLink, Copy } from "lucide-react";
+import { getUnifiedContextUsage } from "@/services/contextWindow";
 import { useStore } from "@/lib/useStore";
 import { cn } from "@/lib/utils";
 import { appStore } from "@/app/store/appStore";
@@ -19,7 +20,7 @@ function formatTokens(n: number): string {
   return String(n);
 }
 
-function ContextIndicator({ used, total, percentage }: { used: number; total: number; percentage: number }) {
+function ContextIndicator({ used, total, percentage, live, source }: { used: number; total: number; percentage: number; live?: boolean; source?: string }) {
   const [showTooltip, setShowTooltip] = useState(false);
   const radius = 6;
   const circumference = 2 * Math.PI * radius;
@@ -48,17 +49,25 @@ function ContextIndicator({ used, total, percentage }: { used: number; total: nu
       {showTooltip && (
         <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
           <div className="bg-zinc-900 dark:bg-zinc-800 text-white text-[11px] rounded-lg px-3 py-2 shadow-xl whitespace-nowrap">
-            <div className="font-semibold mb-1">Context Window</div>
+            <div className="font-semibold mb-1 flex items-center gap-1.5">
+              Context Window
+              {live && <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" title="updating in real time" />}
+            </div>
             <div className="flex items-center gap-2">
               <span className="text-zinc-400">Used:</span>
-              <span className="font-mono">{formatTokens(used)}</span>
+              <span className="font-mono">{used.toLocaleString()}</span>
               <span className="text-zinc-500">/</span>
-              <span className="font-mono">{formatTokens(total)}</span>
+              <span className="font-mono">{total.toLocaleString()}</span>
             </div>
             <div className="flex items-center gap-2 mt-0.5">
               <span className="text-zinc-400">Load:</span>
               <span className="font-mono" style={{ color: strokeColor }}>{percentage}%</span>
             </div>
+            {source ? (
+              <div className="mt-1 text-[10px] text-zinc-500">
+                {source === "server" ? "exact tokens from the server" : "estimated while chatting"}
+              </div>
+            ) : null}
             {/* Arrow */}
             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-zinc-900 dark:bg-zinc-800 rotate-45" />
           </div>
@@ -69,7 +78,7 @@ function ContextIndicator({ used, total, percentage }: { used: number; total: nu
 }
 
 export function ChatHeader() {
-  const { messages, model, provider } = useStore(chatStore.subscribe, chatStore.getState);
+  const { messages, model, provider, isStreaming, streamingContent, maxContextTokens } = useStore(chatStore.subscribe, chatStore.getState);
   const { rightPanelOpen } = useStore(appStore.subscribe, appStore.getState);
   const { activeChatId, chats } = useStore(sidebarStore.subscribe, sidebarStore.getState);
   const activeChat = chats.find((c) => c.id === activeChatId);
@@ -92,17 +101,13 @@ export function ChatHeader() {
   const currentProject = activeChat?.projectId ? projectService.get(activeChat.projectId) : null;
   const allProjects = projectService.getAll();
 
-  // Context window usage — read from ChatMessages (includes streaming content)
-  const [contextUsage, setContextUsage] = useState<{ used: number; total: number; percentage: number } | null>(null);
-  useEffect(() => {
-    const check = () => {
-      const ctx = (window as any).__zeqoux_context;
-      setContextUsage(ctx || null);
-    };
-    check();
-    const iv = setInterval(check, 1000);
-    return () => clearInterval(iv);
-  }, []);
+  // Context window usage — computed from the same live source as the Context
+  // Usage panel: server-reported tokens when the server gives them, a live
+  // estimate over the conversation otherwise, streaming text included.
+  const contextUsage = useMemo(() => {
+    if (!model) return null;
+    return getUnifiedContextUsage(model, messages, isStreaming ? streamingContent : "", maxContextTokens);
+  }, [model, messages, isStreaming, streamingContent, maxContextTokens]);
 
   useEffect(() => {
     // Restore browser handle from IndexedDB (survives reload)
@@ -350,7 +355,7 @@ export function ChatHeader() {
               </>
             )}
             {contextUsage && (
-              <ContextIndicator used={contextUsage.used} total={contextUsage.total} percentage={contextUsage.percentage} />
+              <ContextIndicator used={contextUsage.used} total={contextUsage.total} percentage={contextUsage.percentage} live={contextUsage.live} source={contextUsage.source} />
             )}
             {canChangeModel && <ChevronDown className="h-3 w-3" />}
           </button>

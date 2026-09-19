@@ -5,7 +5,7 @@ import { chatStore } from "../store/chatStore";
 import { ChatMessage } from "./ChatMessage";
 import { ToolCallCard } from "./ToolCallCard";
 import { i18n } from "@/services/i18n";
-import { getModelContextUsage } from "@/services/contextWindow";
+import { getUnifiedContextUsage } from "@/services/contextWindow";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 
 /** Pad incomplete markdown so it renders nicely during streaming. */
@@ -227,7 +227,7 @@ function MarkdownText({ content }: { content: string }) {
 
 export function ChatMessages() {
   const _locale = useStore(i18n.subscribe, i18n.getLocale);
-  const { messages, isStreaming, streamingContent, errorMessage, model } = useStore(
+  const { messages, isStreaming, streamingContent, errorMessage, model, maxContextTokens } = useStore(
     chatStore.subscribe,
     chatStore.getState
   );
@@ -236,17 +236,13 @@ export function ChatMessages() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
-  // Real-time context usage (includes streaming content)
+  // Real-time context usage — one source of truth shared with the header ring
+  // and the Context Usage panel: server-reported tokens when available, live
+  // estimate over the visible conversation otherwise (streaming included).
   const contextUsage = useMemo(() => {
     if (!model) return null;
-    const allContent = [
-      ...messages.map(m => ({ content: m.content, role: m.role })),
-    ];
-    if (isStreaming && streamingContent) {
-      allContent.push({ content: streamingContent, role: "assistant" });
-    }
-    return getModelContextUsage(model, allContent);
-  }, [model, messages, isStreaming, streamingContent]);
+    return getUnifiedContextUsage(model, messages, isStreaming ? streamingContent : "", maxContextTokens);
+  }, [model, messages, isStreaming, streamingContent, maxContextTokens]);
 
   // Auto-scroll to bottom during streaming
   useEffect(() => {

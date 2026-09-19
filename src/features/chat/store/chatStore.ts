@@ -9,6 +9,7 @@ import { taskService } from "@/services/tasks";
 import { getToolDefinitions } from "@/services/mcp";
 import { scanProjectTree, flattenFileList } from "@/services/project-scanner";
 import { memoryService } from "@/services/memory";
+import { reportServerUsage, reportModelChanged, resetServerUsage } from "@/services/contextWindow";
 
 function getDefaultModel(): string {
   const stored = (() => { try { return JSON.parse(localStorage.getItem("zeqouxchat-last-model") ?? "{}"); } catch { return {}; } })();
@@ -43,6 +44,8 @@ let systemPrompt = "You are a helpful AI assistant.";
 let maxContextTokens = 128000;
 let streamingContent = "";
 let errorMessage = "";
+// Real token usage from the last completed server response.
+let lastUsage: { prompt_tokens: number; completion_tokens: number; total_tokens: number } | null = null;
 // Monotonic generation: stale/superceded streams must not touch state.
 let generation = 0;
 
@@ -59,6 +62,8 @@ function loadChat(chatId: string) {
   messages = db.getMessages(chatId);
   streamingContent = "";
   errorMessage = "";
+  // Another conversation — the previous server counts do not apply.
+  resetServerUsage();
   const chat = db.getChat(chatId);
   if (chat) {
     model = chat.model;
@@ -73,6 +78,7 @@ function clearChat() {
   messages = [];
   streamingContent = "";
   errorMessage = "";
+  resetServerUsage();
   notify();
 }
 
@@ -114,6 +120,7 @@ export const chatStore = {
     maxContextTokens,
     streamingContent,
     errorMessage,
+    lastUsage,
   }),
 
   async sendMessage(content: string, attachments?: Attachment[]) {
@@ -167,13 +174,16 @@ export const chatStore = {
       attachments: attachments && attachments.length > 0 ? attachments : undefined,
     };
     db.addMessage(chatId, userMsg);
-    messages = db.getMessages(chatId);
-    notify();
+  messages = db.getMessages(chatId);
+  notify();
 
-    isStreaming = true;
-    streamingContent = "";
-    errorMessage = "";
-    notify();
+  // The upcoming request will re-read the whole conversation: previous server
+  // counts are stale, so the live estimate takes over until the response lands.
+  resetServerUsage();
+  isStreaming = true;
+  streamingContent = "";
+  errorMessage = "";
+  notify();
 
     let extraContext = "";
 
@@ -233,6 +243,13 @@ export const chatStore = {
             notify();
           },
           onDone: () => {},
+          onUsage: (usage) => {
+            if (myGen !== generation) return;
+            lastUsage = usage;
+            // Push the real numbers into the shared context store immediately.
+            reportServerUsage(usage.prompt_tokens, usage.completion_tokens);
+            notify();
+          },
           onError: (err) => {
             if (myGen !== generation) return;
             errorMessage = err;
@@ -307,7 +324,10 @@ export const chatStore = {
   },
 
   setModel: (v: string) => {
+    if (model === v) return;
     model = v;
+    // The context window may differ per model — drop stale server counts.
+    reportModelChanged(v);
     notify();
   },
   setProvider: (v: string) => {
@@ -353,6 +373,7 @@ export const chatStore = {
     temperature = v;
     notify();
   },
+  getLastUsage: () => lastUsage,
   setSystemPrompt: (v: string) => {
     systemPrompt = v;
     notify();

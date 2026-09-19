@@ -9,6 +9,7 @@ import { Slider } from "@/components/ui/slider";
 import { chatStore } from "../store/chatStore";
 import { providerService } from "@/services/providers";
 import { localRuntime } from "@/services/localRuntime";
+import { reportSelectedContext } from "@/services/contextWindow";
 import { MCPPanel } from "./MCPPanel";
 import { settingsStore } from "@/services/settingsStore";
 import { i18n } from "@/services/i18n";
@@ -280,6 +281,9 @@ export function ChatInput() {
 
   const handleCtxSelect = async (v: number) => {
     chatStore.setMaxContextTokens(v);
+    // Keep the shared context indicator in sync with the picked window size;
+    // the engine override takes precedence once /props answers.
+    reportSelectedContext(v);
     // The built-in engine bakes -c at startup — restart it with the new size.
     const rt = localRuntime.getState();
     if ((rt.status === "running" || rt.status === "starting") && rt.modelPath) {
