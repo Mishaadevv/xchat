@@ -1,3 +1,5 @@
+import { isTauri as isTauriEnv } from "@/lib/platform";
+
 export interface PythonEnv {
   available: boolean;
   version: string;
@@ -124,7 +126,7 @@ export const trainingService = {
       if (env) return env;
     } catch {}
     // Fallback: try shell python --version (Tauri) or just report web mode
-    const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+    const isTauri = isTauriEnv();
     if (!isTauri) {
       return { available: false, version: "Web mode — requires Tauri desktop for training", dependencies: {} };
     }
@@ -192,7 +194,7 @@ export const trainingService = {
 
   async startTraining(config: TrainingConfig): Promise<boolean> {
     if (trainingActive) return false;
-    const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+    const isTauri = isTauriEnv();
     if (!isTauri) {
       trainingProgress = { progress: 0, step: 0, total_steps: 0, loss: null, epoch: 0, message: "Training requires Tauri desktop (.exe) — not available in browser." };
       notify();

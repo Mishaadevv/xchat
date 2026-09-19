@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { projectService } from "@/services/projects";
+import { providerService } from "@/services/providers";
 import { sidebarStore } from "@/features/sidebar/store/sidebarStore";
 import { useStore } from "@/lib/useStore";
 import { db } from "@/services/db";
@@ -23,8 +24,11 @@ export function ProjectsPage() {
   useEffect(() => {
     const update = () => setProjects(projectService.getAll());
     update();
-    const id = setInterval(update, 2000);
-    return () => clearInterval(id);
+    const unsubs = [
+      sidebarStore.subscribe(update),
+      providerService.subscribe(update),
+    ];
+    return () => unsubs.forEach((u) => u());
   }, []);
 
   useEffect(() => {

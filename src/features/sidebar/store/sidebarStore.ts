@@ -131,6 +131,7 @@ export const sidebarStore = {
       const folder = folders.find((f) => f.id === folderId);
       if (folder) folder.chatIds.push(chatId);
     }
+    db.saveFolders(folders);
     notify();
   },
 };

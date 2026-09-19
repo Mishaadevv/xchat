@@ -8,15 +8,31 @@ interface StoreData {
   folders: Folder[];
 }
 
+function toDate(value: unknown): Date {
+  const d = value instanceof Date ? value : new Date(value as any);
+  return isNaN(d.getTime()) ? new Date() : d;
+}
+
 function load(): StoreData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const data = JSON.parse(raw);
+      const messages: Record<string, Message[]> = {};
+      if (data.messages && typeof data.messages === "object" && !Array.isArray(data.messages)) {
+        for (const [chatId, list] of Object.entries(data.messages)) {
+          if (!Array.isArray(list)) continue;
+          messages[chatId] = (list as any[]).map((m) => ({ ...m, timestamp: toDate(m.timestamp) }));
+        }
+      }
       return {
-        chats: data.chats?.map((c: any) => ({ ...c, createdAt: new Date(c.createdAt), modifiedAt: new Date(c.modifiedAt) })) ?? [],
-        messages: data.messages ?? {},
-        folders: data.folders ?? [],
+        chats: Array.isArray(data.chats)
+          ? data.chats.map((c: any) => ({ ...c, createdAt: toDate(c.createdAt), modifiedAt: toDate(c.modifiedAt) }))
+          : [],
+        messages,
+        folders: Array.isArray(data.folders)
+          ? data.folders.map((f: any) => ({ ...f, chatIds: Array.isArray(f.chatIds) ? f.chatIds : [] }))
+          : [],
       };
     }
   } catch {}
@@ -111,6 +127,11 @@ export const db = {
   },
 
   getFolders: () => [...cache.folders],
+
+  saveFolders: (folders: Folder[]) => {
+    cache.folders = folders;
+    persist();
+  },
 
   addFolder: (folder: Folder) => {
     cache.folders.push(folder);

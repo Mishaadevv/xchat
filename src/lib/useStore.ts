@@ -7,6 +7,7 @@ export function useStore<T>(
   const [state, setState] = useState(getState());
 
   useEffect(() => {
+    setState(getState());
     const unsubscribe = subscribe(() => setState(getState()));
     return unsubscribe;
   }, [subscribe, getState]);

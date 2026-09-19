@@ -6,6 +6,11 @@ dist/
 src-tauri/target/
 src-tauri/gen/schemas/
 
+# Bundled inference engine (large, fetched per platform — see src-tauri/binaries/README.md)
+src-tauri/binaries/*
+!src-tauri/binaries/README.md
+!src-tauri/binaries/.gitkeep
+
 # TypeScript / Vite
 *.tsbuildinfo
 

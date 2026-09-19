@@ -44,13 +44,18 @@ export function HubPage() {
   const [hfCategory, setHfCategory] = useState("text-generation");
 
   const load = () => setProviders(providerService.getProviders());
-  useEffect(() => { load(); const id = setInterval(load, 3000); return () => clearInterval(id); }, []);
+  useEffect(() => {
+    load();
+    const unsub = providerService.subscribe(load);
+    return () => unsub();
+  }, []);
 
   useEffect(() => {
     if (view !== "huggingface") return;
     setHfLoading(true);
-    const cat = hfCategory ? `?pipeline_tag=${hfCategory}` : "";
-    fetch(`https://huggingface.co/api/models${cat}&sort=downloads&direction=-1&limit=50`)
+    const params = new URLSearchParams({ sort: "downloads", direction: "-1", limit: "50" });
+    if (hfCategory) params.set("pipeline_tag", hfCategory);
+    fetch(`https://huggingface.co/api/models?${params.toString()}`)
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data)) setHfModels(data);

@@ -137,6 +137,11 @@ function saveProviders(providers: ProviderConfig[]) {
 }
 
 let providersCache: ProviderConfig[] | null = null;
+const providerListeners = new Set<() => void>();
+
+function notifyProviders() {
+  providerListeners.forEach((l) => l());
+}
 
 function getProviders(): ProviderConfig[] {
   if (!providersCache) providersCache = loadProviders();
@@ -145,6 +150,7 @@ function getProviders(): ProviderConfig[] {
 
 function persist() {
   saveProviders(getProviders());
+  notifyProviders();
 }
 
 async function discoverOpenAIModels(baseUrl: string, apiKey: string): Promise<string[]> {
@@ -211,6 +217,11 @@ async function detectProviderType(baseUrl: string): Promise<ProviderType> {
 }
 
 export const providerService = {
+  subscribe: (listener: () => void) => {
+    providerListeners.add(listener);
+    return () => { providerListeners.delete(listener); };
+  },
+
   getProviders: () => [...getProviders()],
 
   getProvider: (id: string) => getProviders().find((p) => p.id === id) ?? null,
@@ -292,6 +303,7 @@ export const providerService = {
     const list = getProviders();
     providersCache = list.filter((p) => p.id !== id);
     saveProviders(providersCache);
+    notifyProviders();
   },
 
   getConfiguredProviders: () => getProviders().filter((p) => p.apiKey.length > 0 || p.type === "ollama"),

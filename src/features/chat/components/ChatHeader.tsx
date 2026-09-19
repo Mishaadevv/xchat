@@ -106,13 +106,14 @@ export function ChatHeader() {
 
   useEffect(() => {
     // Restore browser handle from IndexedDB (survives reload)
-    import("@/services/mcp").then(m => (m as any).initBrowserHandle?.());
+    import("@/services/mcp").then(m => (m as any).initBrowserHandle?.()).catch(() => {});
     // Listen for Tauri drag-drop events (gives full paths)
     let unlisten: (() => void) | null = null;
+    let cancelled = false;
     (async () => {
       try {
         const { getCurrentWindow } = await import("@tauri-apps/api/window");
-        unlisten = await getCurrentWindow().onDragDropEvent((event) => {
+        const off = await getCurrentWindow().onDragDropEvent((event) => {
           if (event.payload.type === "over") {
             setDragOver(true);
           } else if (event.payload.type === "leave") {
@@ -130,11 +131,16 @@ export function ChatHeader() {
             }
           }
         });
+        if (cancelled) {
+          off();
+        } else {
+          unlisten = off;
+        }
       } catch {
         // Tauri API not available (browser dev)
       }
     })();
-    return () => { if (unlisten) unlisten(); };
+    return () => { cancelled = true; if (unlisten) unlisten(); };
   }, []); // Only register once
 
   useEffect(() => {

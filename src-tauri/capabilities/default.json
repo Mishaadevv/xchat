@@ -31,6 +31,17 @@
     "dialog:allow-save",
     "shell:default",
     "shell:allow-execute",
+    {
+      "identifier": "shell:allow-spawn",
+      "allow": [
+        {
+          "name": "binaries/llama-server",
+          "cmd": "$RESOURCE/binaries/llama-server",
+          "args": true,
+          "sidecar": true
+        }
+      ]
+    },
     "shell:allow-open",
     "autostart:default",
     "autostart:allow-enable",

@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useStore } from "@/lib/useStore";
 import { appStore } from "@/app/store/appStore";
+import { onboardingStore } from "@/features/onboarding/services/onboardingStore";
+import { FirstRunModels } from "@/features/onboarding/components/FirstRunModels";
 import { providerService } from "@/services/providers";
+import { settingsStore } from "@/services/settingsStore";
 import { Sidebar } from "@/features/sidebar/components/Sidebar";
 import { ChatArea } from "@/features/chat/components/ChatArea";
 import { HubPage } from "@/features/hub/components/HubPage";
@@ -47,9 +50,17 @@ function MainContent() {
 }
 
 export default function App() {
+  const { open: onboardingOpen } = useStore(onboardingStore.subscribe, onboardingStore.getState);
+
   // Auto-detect Ollama and free providers on startup
   useEffect(() => {
+    settingsStore.initAutostart();
     providerService.autoRefreshFreeProviders().catch(() => {});
+  }, []);
+
+  // First launch: suggest free local models (skippable, shown once)
+  useEffect(() => {
+    if (!onboardingStore.isOnboarded()) onboardingStore.open();
   }, []);
 
   return (
@@ -57,6 +68,7 @@ export default function App() {
       <Sidebar />
       <MainContent />
       <RightPanel />
+      {onboardingOpen && <FirstRunModels />}
     </div>
   );
 }

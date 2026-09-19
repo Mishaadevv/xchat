@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { Paperclip, Image, Globe, Brain, Blocks, Send, Square, X, Thermometer, Wrench, HelpCircle, Trash2, FileText, Search, Code2, Terminal, GitBranch, Sparkles } from "lucide-react";
+import { Paperclip, Image, Globe, Brain, Blocks, Send, Square, X, Thermometer, Wrench, HelpCircle, Trash2, FileText, Search, Code2, Terminal, GitBranch, Sparkles, Layers } from "lucide-react";
 import { motion } from "framer-motion";
 import { useStore } from "@/lib/useStore";
 import { cn } from "@/lib/utils";
@@ -7,6 +7,8 @@ import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/comp
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
 import { chatStore } from "../store/chatStore";
+import { providerService } from "@/services/providers";
+import { localRuntime } from "@/services/localRuntime";
 import { MCPPanel } from "./MCPPanel";
 import { settingsStore } from "@/services/settingsStore";
 import { i18n } from "@/services/i18n";
@@ -40,7 +42,7 @@ function getSlashCommands(): SlashCmd[] {
 }
 
 export function ChatInput() {
-  const { inputValue, isStreaming, thinkingMode, internetMode, mcpMode, temperature } = useStore(
+  const { inputValue, isStreaming, thinkingMode, internetMode, mcpMode, temperature, provider, model, maxContextTokens } = useStore(
     chatStore.subscribe,
     chatStore.getState
   );
@@ -269,6 +271,27 @@ export function ChatInput() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
+  // ── Local context size (only for local providers) ─────────────────────────
+  const CONTEXT_OPTIONS = [4096, 8192, 16384, 32768, 131072];
+  const activeProvider = providerService.getProvider(provider);
+  const isLocalProvider =
+    !!activeProvider && (activeProvider.type === "ollama" || activeProvider.category === "local");
+  const formatCtx = (v: number) => (v >= 1000 ? `${Math.round(v / 1024)}K` : `${v}`);
+
+  const handleCtxSelect = async (v: number) => {
+    chatStore.setMaxContextTokens(v);
+    // The built-in engine bakes -c at startup — restart it with the new size.
+    const rt = localRuntime.getState();
+    if ((rt.status === "running" || rt.status === "starting") && rt.modelPath) {
+      if (isStreaming) chatStore.stopStreaming();
+      const path = rt.modelPath;
+      const gpuLayers = rt.gpuLayers;
+      const displayName = rt.modelFile?.replace(/\.gguf$/i, "") || model;
+      await localRuntime.stop();
+      await localRuntime.start(path, { gpuLayers, ctx: v, displayName });
+    }
+  };
+
   return (
     <div
       className="shrink-0 px-4 pb-5 pt-3 bg-gradient-to-t from-background via-background to-transparent"
@@ -430,6 +453,58 @@ export function ChatInput() {
                 <Wrench className="h-4 w-4" />
               </button>
             </TooltipTrigger><TooltipContent side="bottom" className="bg-zinc-900 text-white text-xs">{i18n.t("chat.configure_mcp")}</TooltipContent></Tooltip>
+            {isLocalProvider && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        className={cn(
+                          "h-9 px-2.5 flex items-center justify-center gap-1 rounded-xl transition-all border text-xs font-semibold font-mono",
+                          maxContextTokens !== 4096
+                            ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border-zinc-900 dark:border-white shadow-md"
+                            : "bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400 border-zinc-200/50 dark:border-zinc-700/50"
+                        )}
+                      >
+                        <Layers className="h-4 w-4" />
+                        {formatCtx(maxContextTokens)}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent side="top" align="end" className="w-56 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl">
+                      <div className="space-y-2 p-1">
+                        <p className="text-sm font-medium">
+                          {locale === "ru" ? "Контекст локальной модели" : "Local model context"}
+                        </p>
+                        <p className="text-[11px] text-zinc-500">
+                          {locale === "ru"
+                            ? "Больше контекста — больше памяти. Перезапускает встроенный движок."
+                            : "More context needs more RAM. Restarts the built-in engine."}
+                        </p>
+                        <div className="grid grid-cols-5 gap-1">
+                          {CONTEXT_OPTIONS.map((v) => (
+                            <button
+                              key={v}
+                              onClick={() => handleCtxSelect(v)}
+                              className={cn(
+                                "h-7 rounded-lg text-[11px] font-mono font-medium transition-all",
+                                maxContextTokens === v
+                                  ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow"
+                                  : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                              )}
+                            >
+                              {formatCtx(v)}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="bg-zinc-900 text-white text-xs">
+                  {locale === "ru" ? `Контекст: ${formatCtx(maxContextTokens)}` : `Context: ${formatCtx(maxContextTokens)}`}
+                </TooltipContent>
+              </Tooltip>
+            )}
             <Tooltip>
               <TooltipTrigger asChild>
                 <Popover>
@@ -444,8 +519,7 @@ export function ChatInput() {
                     >
                       <Thermometer className="h-4 w-4" />
                     </button>
-                  </PopoverTrigger>
-                  <PopoverContent side="top" align="end" className="w-64 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl">
+                  </PopoverTrigger>                  <PopoverContent side="top" align="end" className="w-64 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl">
                     <div className="space-y-4 p-1">
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-medium">{i18n.t("chat.temperature")}</span>

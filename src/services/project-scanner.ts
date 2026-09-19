@@ -31,7 +31,7 @@ export async function scanProjectTree(rootPath: string, depth = 0): Promise<File
   if (rootPath.startsWith("browser://")) {
     try {
       const { getBrowserDirHandle } = await import("./mcp");
-      const rootHandle: any = (getBrowserDirHandle() as any)?.();
+      const rootHandle: any = getBrowserDirHandle();
       // Tauri not available, use browser handle listing
       let target: any = rootHandle;
       const sub = rootPath.replace(/^browser:\/\/[^\/]*\/?/, "").replace(/\/+$/,"");

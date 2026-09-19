@@ -10,6 +10,8 @@ import { providerService, PROVIDER_CATEGORIES, type ProviderConfig } from "@/ser
 import { themeStore, type Theme } from "@/services/theme";
 import { i18n, type Locale } from "@/services/i18n";
 import { settingsStore } from "@/services/settingsStore";
+import { onboardingStore } from "@/features/onboarding/services/onboardingStore";
+import { getDownloadedModels } from "@/services/downloads";
 import { navVisibility, type NavId } from "@/services/navVisibility";
 import { Blocks, Folder, Brain, Database, Store, Download, Puzzle } from "lucide-react";
 
@@ -157,7 +159,19 @@ export function SettingsPage() {
   };
 
   return (
-    <div className="flex-1 flex h-full">
+    <div className="flex-1 flex h-full relative">
+      {/* Floating round button: recommended free local models (always available) */}
+      <button
+        onClick={() => onboardingStore.open()}
+        title={locale === "ru" ? "Рекомендуемые модели — скачать и посмотреть" : "Recommended models — download and info"}
+        aria-label={locale === "ru" ? "Рекомендуемые модели" : "Recommended models"}
+        className="absolute bottom-6 right-6 z-20 h-12 w-12 rounded-full bg-gradient-to-br from-violet-600 to-indigo-600 text-white flex items-center justify-center shadow-xl shadow-violet-500/25 hover:scale-105 active:scale-95 transition-transform"
+      >
+        <Sparkles className="h-5 w-5" />
+        {Object.keys(getDownloadedModels()).length === 0 && (
+          <span className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-amber-400 border-2 border-white dark:border-zinc-950" />
+        )}
+      </button>
       <div className="w-52 border-r shrink-0 py-4 bg-secondary/30 overflow-y-auto">
         <div className="px-4 mb-4">
           <h1 className="text-sm font-semibold">Settings</h1>

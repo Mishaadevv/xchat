@@ -119,10 +119,11 @@ export const memoryService = {
     const trimmed = content.trim();
     if (!trimmed) return null;
     // dedupe: if same content exists, update instead
-    const existing = loadEntries().find(e => e.content.toLowerCase() === trimmed.toLowerCase());
+    const all = loadEntries();
+    const existing = all.find(e => e.content.toLowerCase() === trimmed.toLowerCase());
     if (existing) {
       existing.updatedAt = new Date().toISOString();
-      saveEntries(loadEntries());
+      saveEntries(all);
       notify();
       return existing;
     }
@@ -139,7 +140,6 @@ export const memoryService = {
       updatedAt: now,
       sourceChatId: opts?.sourceChatId,
     };
-    const all = loadEntries();
     // enforce maxEntries (remove oldest low importance first)
     if (all.length >= settings.maxEntries) {
       const sorted = [...all].sort((a, b) => {

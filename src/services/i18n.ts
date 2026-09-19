@@ -605,10 +605,14 @@ export const i18n = {
     listeners.forEach((l) => l());
   },
   t: (key: string, params?: Record<string, string | number>): string => {
-    let text = translations[currentLocale]?.[key] || translations["en"]?.[key] || key;
+    let text = translations[currentLocale]?.[key] || translations["en"]?.[key];
+    if (text === undefined) {
+      if (import.meta.env.DEV) console.warn(`[i18n] missing key: ${key}`);
+      return key;
+    }
     if (params) {
       for (const [k, v] of Object.entries(params)) {
-        text = text.replace(`{${k}}`, String(v));
+        text = text.split(`{${k}}`).join(String(v));
       }
     }
     return text;

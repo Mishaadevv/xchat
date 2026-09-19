@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Download, X, RefreshCw, Trash2, Folder, FolderOpen } from "lucide-react";
+import { Download, X, RefreshCw, Trash2, Folder, FolderOpen, Sparkles } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { downloadService, type DownloadEntry } from "@/services/downloads";
 import { settingsStore } from "@/services/settingsStore";
+import { onboardingStore } from "@/features/onboarding/services/onboardingStore";
 import { cn } from "@/lib/utils";
 
 export function DownloadsPage() {
@@ -24,6 +25,12 @@ export function DownloadsPage() {
     downloadService.cancel(id);
   };
 
+  const retryItem = (dl: DownloadEntry) => {
+    if (dl.repo && dl.catalogId) {
+      downloadService.startSmartDownload(dl.catalogId, dl.repo, dl.preferredFile);
+    }
+  };
+
   const pickDownloadFolder = async () => {
     try {
       const { open } = await import("@tauri-apps/plugin-dialog");
@@ -40,6 +47,10 @@ export function DownloadsPage() {
       <div className="h-14 border-b flex items-center justify-between px-6 shrink-0">
         <h1 className="text-sm font-semibold">Downloads</h1>
         <div className="flex items-center gap-2">
+          <button onClick={() => onboardingStore.open()} className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-muted-foreground hover:bg-accent transition-colors">
+            <Sparkles className="h-3.5 w-3.5" />
+            Recommended
+          </button>
           <button onClick={pickDownloadFolder} className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs text-muted-foreground hover:bg-accent transition-colors">
             <Folder className="h-3.5 w-3.5" />
             {downloadPath ? downloadPath.split("\\").pop()?.split("/").pop() || "Change folder" : "Set folder"}
@@ -97,6 +108,11 @@ export function DownloadsPage() {
                         <X className="h-4 w-4" />
                       </Button>
                     )}
+                    {dl.status === "error" && dl.repo && dl.catalogId && (
+                      <Button variant="ghost" size="sm" onClick={() => retryItem(dl)}>
+                        <RefreshCw className="h-3.5 w-3.5 mr-1" /> Retry
+                      </Button>
+                    )}
                     {(dl.status === "completed" || dl.status === "error" || dl.status === "cancelled") && (
                       <Button variant="ghost" size="icon-sm" onClick={() => cancelItem(dl.id)}>
                         <X className="h-4 w-4" />
@@ -114,13 +130,13 @@ export function DownloadsPage() {
                   />
                 </div>
                   <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>
-                    {dl.status === "downloading" ? dl.speed : dl.status === "completed" ? (dl.savedPath ? "Saved" : "Completed") : dl.status === "error" ? "Failed" : dl.status === "cancelled" ? "Cancelled" : ""}
-                  </span>
-                  <span>
-                    {dl.status === "completed" ? `${dl.totalSize}` : `${dl.downloadedSize} / ${dl.totalSize}`}
-                  </span>
-                </div>
+                    <span className="truncate mr-2" title={dl.status === "error" ? dl.speed : undefined}>
+                      {dl.status === "downloading" ? dl.speed : dl.status === "completed" ? (dl.savedPath ? "Saved" : "Completed") : dl.status === "error" ? (dl.speed && dl.speed !== "Failed" ? dl.speed : "Failed") : dl.status === "cancelled" ? "Cancelled" : ""}
+                    </span>
+                    <span className="shrink-0">
+                      {dl.status === "completed" ? `${dl.totalSize}` : `${dl.downloadedSize} / ${dl.totalSize}`}
+                    </span>
+                  </div>
                 {dl.savedPath && (
                   <p className="text-[10px] text-muted-foreground truncate mt-1" title={dl.savedPath}>
                     <Folder className="h-3 w-3 inline mr-1" />{dl.savedPath}

@@ -3,7 +3,7 @@ import { db } from "@/services/db";
 import { sidebarStore } from "@/features/sidebar/store/sidebarStore";
 import { providerService } from "@/services/providers";
 import { projectService } from "@/services/projects";
-import { sendMessageStream } from "@/services/api";
+import { sendMessageStream, abortActiveStream } from "@/services/api";
 import { webSearch, buildSearchContext } from "@/services/search";
 import { taskService } from "@/services/tasks";
 import { getToolDefinitions } from "@/services/mcp";
@@ -43,6 +43,8 @@ let systemPrompt = "You are a helpful AI assistant.";
 let maxContextTokens = 128000;
 let streamingContent = "";
 let errorMessage = "";
+// Monotonic generation: stale/superceded streams must not touch state.
+let generation = 0;
 
 const listeners = new Set<() => void>();
 
@@ -51,6 +53,9 @@ function notify() {
 }
 
 function loadChat(chatId: string) {
+  // Switching chats kills the live stream so it can't write into the wrong chat.
+  abortActiveStream();
+  generation++;
   messages = db.getMessages(chatId);
   streamingContent = "";
   errorMessage = "";
@@ -63,6 +68,8 @@ function loadChat(chatId: string) {
 }
 
 function clearChat() {
+  abortActiveStream();
+  generation++;
   messages = [];
   streamingContent = "";
   errorMessage = "";
@@ -110,11 +117,15 @@ export const chatStore = {
   }),
 
   async sendMessage(content: string, attachments?: Attachment[]) {
+    // Never overlap generations: stop the previous stream first.
+    if (isStreaming) chatStore.stopStreaming();
+
     let chatId = sidebarStore.getActiveChatId();
     if (!chatId) {
       const chat = sidebarStore.createChat();
       chatId = chat.id;
     }
+    const myGen = ++generation;
 
     const currentModel = model;
     const currentProvider = provider;
@@ -217,11 +228,13 @@ export const chatStore = {
         messages,
         {
           onToken: (token) => {
+            if (myGen !== generation) return;
             streamingContent += token;
             notify();
           },
           onDone: () => {},
           onError: (err) => {
+            if (myGen !== generation) return;
             errorMessage = err;
             notify();
           },
@@ -229,6 +242,9 @@ export const chatStore = {
         { temperature, systemPrompt: finalSystemPrompt || undefined, projectPath: projectPath || undefined },
         tools
       );
+
+      // Superseded (stopped / switched / regenerated) — drop the result silently.
+      if (myGen !== generation) return;
 
       const assistantMsg: Message = {
         id: crypto.randomUUID(),
@@ -243,6 +259,11 @@ export const chatStore = {
       errorMessage = "";
       taskService.parseFromContent(chatId, fullText || "");
     } catch (err: any) {
+      if (myGen !== generation || err?.name === "AbortError") {
+        isStreaming = false;
+        notify();
+        return;
+      }
       errorMessage = err.message ?? "Failed to get response";
     }
 
@@ -251,6 +272,9 @@ export const chatStore = {
   },
 
   stopStreaming: () => {
+    // Abort the network stream first — then save whatever arrived so far.
+    abortActiveStream();
+    generation++;
     // Save whatever was streamed so far as an assistant message
     const chatId = sidebarStore.getActiveChatId();
     if (streamingContent.trim() && chatId) {
@@ -314,6 +338,7 @@ export const chatStore = {
   regenerateLast: () => {
     const chatId = sidebarStore.getActiveChatId();
     if (!chatId) return;
+    if (isStreaming) chatStore.stopStreaming();
     const msgs = db.getMessages(chatId);
     const lastUserIdx = msgs.map((m, i) => ({ m, i })).filter((x) => x.m.role === "user").pop()?.i;
     if (lastUserIdx === undefined) return;

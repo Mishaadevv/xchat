@@ -1,3 +1,5 @@
+import { isTauri as isTauriEnv } from "@/lib/platform";
+
 export interface MCPTool {
   id: string;
   name: string;
@@ -724,7 +726,7 @@ export async function executeMCPStep(toolId: string, input: MCPFileInput): Promi
 }
 
 async function readFile(path: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   const hasBrowser = hasBrowserHandle();
   // browser handle path like browser://project/...
   const isBrowserPath = path.startsWith("browser://");
@@ -764,7 +766,7 @@ async function readFile(path: string): Promise<MCPResult> {
 }
 
 async function writeFile(path: string, content: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   const hasBrowser = hasBrowserHandle();
   const isBrowserPath = path.startsWith("browser://");
   if (!isTauri && hasBrowser) {
@@ -809,7 +811,7 @@ async function writeFile(path: string, content: string): Promise<MCPResult> {
 }
 
 async function listDir(path: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   const hasBrowser = hasBrowserHandle();
   const isBrowserPath = path.startsWith("browser://");
   if (!isTauri && hasBrowser) {
@@ -875,7 +877,7 @@ async function runCode(code: string): Promise<MCPResult> {
 }
 
 async function runTerminal(command: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   if (!isTauri) {
     return nope("Terminal требует Tauri desktop (exe). В браузере используй run-code для JS. Команда: " + command);
   }
@@ -973,7 +975,7 @@ if err:
 
 // ── Extended helpers ────────────────────────────────────────────────────
 async function deleteFile(path: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   const hasBrowser = hasBrowserHandle();
   const isBrowserPath = path.startsWith("browser://");
   if (!isTauri && hasBrowser) {
@@ -992,7 +994,7 @@ async function deleteFile(path: string): Promise<MCPResult> {
   } catch (e:any) { return { success: false, output: "", error: `Delete failed: ${e.message}`, duration: 0 }; }
 }
 async function createDirectory(path: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   const hasBrowser = hasBrowserHandle();
   const isBrowserPath = path.startsWith("browser://");
   if (!isTauri && hasBrowser) {
@@ -1013,7 +1015,7 @@ async function createDirectory(path: string): Promise<MCPResult> {
 }
 async function copyFile(src: string, dst: string): Promise<MCPResult> {
   try {
-    const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+    const isTauri = isTauriEnv();
     if (isTauri) {
       const { copyFile: cp } = await import("@tauri-apps/plugin-fs");
       await cp(src, dst);
@@ -1027,7 +1029,7 @@ async function copyFile(src: string, dst: string): Promise<MCPResult> {
 }
 async function moveFile(src: string, dst: string): Promise<MCPResult> {
   try {
-    const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+    const isTauri = isTauriEnv();
     if (isTauri) {
       try {
         const { rename } = await import("@tauri-apps/plugin-fs");
@@ -1049,7 +1051,7 @@ async function moveFile(src: string, dst: string): Promise<MCPResult> {
   } catch (e:any) { return { success: false, output: "", error: `Move failed: ${e.message}`, duration: 0 }; }
 }
 async function fileStat(path: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   if (isTauri) {
     try {
       const { stat } = await import("@tauri-apps/plugin-fs");
@@ -1184,7 +1186,7 @@ async function systemInfo(): Promise<MCPResult> {
   return { success: true, output: info, duration: 0 };
 }
 async function openInExplorer(path: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   if (!isTauri) return { success: false, output: "", error: "Open in Explorer требует Tauri desktop", duration: 0 };
   try {
     const { openPath } = await import("@tauri-apps/plugin-opener");
@@ -1197,7 +1199,7 @@ async function openInExplorer(path: string): Promise<MCPResult> {
   }
 }
 async function runPython(code: string): Promise<MCPResult> {
-  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window;
+  const isTauri = isTauriEnv();
   if (!isTauri) return { success: false, output: "", error: "Run Python требует Tauri. Используй run-code для JS.", duration: 0 };
   try {
     const { Command } = await import("@tauri-apps/plugin-shell");

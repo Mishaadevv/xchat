@@ -6,12 +6,17 @@ interface SettingsState {
   downloadPath: string;
 }
 
+const DEFAULTS: SettingsState = { sendOnEnter: true, startOnBoot: false, downloadPath: "" };
+
 function loadSettings(): SettingsState {
   try {
     const raw = localStorage.getItem("zeqouxchat-settings");
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") return { ...DEFAULTS, ...parsed };
+    }
   } catch {}
-  return { sendOnEnter: true, startOnBoot: false, downloadPath: "" };
+  return { ...DEFAULTS };
 }
 
 function saveSettings(state: SettingsState) {
@@ -46,10 +51,9 @@ export const settingsStore = {
     listeners.add(listener);
     return () => listeners.delete(listener);
   },
-  getState: (): SettingsState => {
-    ensureAutostart();
-    return loadSettings();
-  },
+  /** Call once at startup — was previously (wastefully) fired on every read. */
+  initAutostart: () => ensureAutostart(),
+  getState: (): SettingsState => loadSettings(),
   setSendOnEnter: (value: boolean) => {
     const state = loadSettings();
     state.sendOnEnter = value;

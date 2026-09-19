@@ -12,6 +12,20 @@ export interface StreamOptions {
   temperature?: number;
   systemPrompt?: string;
   projectPath?: string;
+  /** Abort this generation (Stop button, chat switch, regenerate). */
+  signal?: AbortSignal;
+}
+
+// One live generation at a time — chatStore aborts it on Stop/switch/regenerate.
+let activeStreamAbort: AbortController | null = null;
+
+// Tool-call rounds per generation — small local models loop tools forever.
+const MAX_TOOL_ROUNDS = 6;
+let toolRound = 0;
+
+export function abortActiveStream() {
+  try { activeStreamAbort?.abort(); } catch {}
+  activeStreamAbort = null;
 }
 
 function buildOpenAIMessages(messages: Message[], systemPrompt?: string) {
@@ -52,6 +66,53 @@ interface ToolCallAccumulator {
   function: { name: string; arguments: string };
 }
 
+// ── Vision payload converters ────────────────────────────────────────────
+// OpenAI parts, Ollama { content, images[] } and Anthropic blocks all differ.
+// These keep images working instead of silently dropping them.
+
+function dataUrlToAnthropic(url: string): { media_type: string; data: string } | null {
+  const match = /^data:(image\/[a-zA-Z0-9.+-]+);base64,([\s\S]*)$/.exec(url || "");
+  if (!match) return null;
+  return { media_type: match[1], data: match[2] };
+}
+
+/** OpenAI-style messages → Ollama /api/chat ({ content: string, images?: [] }). */
+function toOllamaMessages(messages: any[]): any[] {
+  return messages.map((m) => {
+    if (m.role === "tool") {
+      return { role: "tool", content: typeof m.content === "string" ? m.content : "" };
+    }
+    if (Array.isArray(m.content)) {
+      const text = m.content
+        .filter((p: any) => p?.type === "text" && typeof p.text === "string")
+        .map((p: any) => p.text)
+        .join("\n");
+      const images = m.content
+        .filter((p: any) => p?.type === "image_url" && p?.image_url?.url)
+        .map((p: any) => p.image_url.url);
+      const out: any = { role: m.role, content: text };
+      if (images.length > 0) out.images = images;
+      if (m.tool_calls) out.tool_calls = m.tool_calls;
+      if (m.tool_call_id) out.tool_call_id = m.tool_call_id;
+      return out;
+    }
+    return m;
+  });
+}
+
+/** data: URL image attachments → Anthropic image blocks. */
+function anthropicImageBlocks(attachments: any[]): any[] {
+  const blocks: any[] = [];
+  for (const att of attachments || []) {
+    if (att?.type !== "image" || !att?.url) continue;
+    const parsed = dataUrlToAnthropic(att.url);
+    if (parsed) {
+      blocks.push({ type: "image", source: { type: "base64", ...parsed } });
+    }
+  }
+  return blocks;
+}
+
 // ── Anthropic tool conversion ─────────────────────────────────────────────
 function toAnthropicTools(tools?: ToolDefinition[]) {
   if (!tools || tools.length === 0) return undefined;
@@ -61,7 +122,7 @@ function toAnthropicTools(tools?: ToolDefinition[]) {
     input_schema: t.function.parameters || { type: "object", properties: {} },
   }));
 }
-function buildAnthropicMessages(messages: { role: string; content: string; tool_call_id?: string; tool_calls?: any[] }[], systemPrompt?: string) {
+function buildAnthropicMessages(messages: { role: string; content: any; tool_call_id?: string; tool_calls?: any[]; attachments?: any[] }[], systemPrompt?: string) {
   // For anthropic, system is separate; here we just map messages.
   // Tool messages become user tool_result blocks.
   const out: any[] = [];
@@ -83,7 +144,29 @@ function buildAnthropicMessages(messages: { role: string; content: string; tool_
       }
       out.push({ role: "assistant", content: blocks });
     } else {
-      out.push({ role: m.role === "assistant" ? "assistant" : "user", content: m.content });
+      // Text + attached images (data: URLs become image blocks; remote URLs can't — say so).
+      const blocks: any[] = [];
+      if (Array.isArray(m.content)) {
+        for (const p of m.content) {
+          if (p?.type === "text" && typeof p.text === "string") {
+            blocks.push({ type: "text", text: p.text });
+          } else if (p?.type === "image_url" && p?.image_url?.url) {
+            const parsed = dataUrlToAnthropic(p.image_url.url);
+            if (parsed) {
+              blocks.push({ type: "image", source: { type: "base64", ...parsed } });
+            } else {
+              blocks.push({ type: "text", text: `[attached image skipped — Anthropic needs base64 data, got URL: ${String(p.image_url.url).slice(0, 120)}]` });
+            }
+          }
+        }
+      } else if (m.content) {
+        blocks.push({ type: "text", text: m.content });
+      }
+      blocks.push(...anthropicImageBlocks((m as any).attachments));
+      out.push({
+        role: m.role === "assistant" ? "assistant" : "user",
+        content: blocks.length === 1 && blocks[0].type === "text" ? blocks[0].text : blocks,
+      });
     }
   }
   return out;
@@ -97,6 +180,7 @@ async function streamOpenAI(
   options?: StreamOptions,
   tools?: ToolDefinition[]
 ) {
+  options?.signal?.throwIfAborted?.();
   const body: Record<string, any> = {
     model,
     messages,
@@ -119,6 +203,7 @@ async function streamOpenAI(
     method: "POST",
     headers,
     body: JSON.stringify(body),
+    signal: options?.signal,
   });
 
   if (!response.ok) {
@@ -148,6 +233,7 @@ async function streamOpenAI(
 
   while (true) {
     const { done, value } = await reader.read();
+    if (options?.signal?.aborted) throw new DOMException("Aborted", "AbortError");
     if (done) break;
 
     buffer += decoder.decode(value, { stream: true });
@@ -191,7 +277,12 @@ async function streamOpenAI(
 
   // Fix: Tool may appear intermittently because some providers send tool_calls without finish_reason="tool_calls" or with delayed signal.
   // Always execute if we accumulated any tool calls, regardless of finishReason, to ensure deterministic display.
+  // Guarded by MAX_TOOL_ROUNDS so small local models can't loop tools forever.
   if (toolCalls.size > 0) {
+    toolRound++;
+    if (toolRound > MAX_TOOL_ROUNDS) {
+      fullText += (fullText ? "\n\n" : "") + `[Tool limit reached (${MAX_TOOL_ROUNDS} rounds) — answering with collected results.]`;
+    } else {
     if (finishReason !== "tool_calls") console.log('[MCP] Received tool_calls without official finish_reason:', finishReason, '— still executing', toolCalls.size, 'calls');
     else console.log('[MCP] Received tool_calls:', toolCalls.size, 'calls');
     const assistantMsg: { role: string; content: string; tool_calls: any[] } = {
@@ -242,9 +333,10 @@ async function streamOpenAI(
     if (continued) {
       fullText += (fullText ? "\n\n" : "") + continued;
     } else if (!fullText) {
-      console.log('[MCP] No text generated, adding placeholder');
-      fullText = "Tools executed successfully.";
+      const names = [...toolCalls.values()].map((t) => t.function.name).filter(Boolean).join(", ");
+      fullText = names ? `Tools executed: ${names}.` : "Tools executed successfully.";
     }
+    } // else: tool rounds remaining
   }
 
   return fullText;
@@ -258,6 +350,7 @@ async function streamAnthropic(
   options?: StreamOptions,
   tools?: ToolDefinition[]
 ) {
+  options?.signal?.throwIfAborted?.();
   const anthropicTools = toAnthropicTools(tools);
   if (anthropicTools) console.log('[MCP] Sending tools to Anthropic:', anthropicTools.map((t:any)=>t.name));
   const body: any = {
@@ -278,6 +371,7 @@ async function streamAnthropic(
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify(body),
+    signal: options?.signal,
   });
 
   if (!response.ok) {
@@ -302,6 +396,7 @@ async function streamAnthropic(
 
   while (true) {
     const { done, value } = await reader.read();
+    if (options?.signal?.aborted) throw new DOMException("Aborted", "AbortError");
     if (done) break;
 
     buffer += decoder.decode(value, { stream: true });
@@ -356,7 +451,12 @@ async function streamAnthropic(
   }
 
   // Fix: deterministic display — if any tool_use was started, execute it even if stopReason missing
+  // Guarded by MAX_TOOL_ROUNDS so small local models can't loop tools forever.
   if (toolCalls.size > 0) {
+    toolRound++;
+    if (toolRound > MAX_TOOL_ROUNDS) {
+      fullText += (fullText ? "\n\n" : "") + `[Tool limit reached (${MAX_TOOL_ROUNDS} rounds) — answering with collected results.]`;
+    } else {
     if (stopReason !== "tool_use") console.log('[MCP-Anthropic] tool_calls without stop_reason tool_use:', stopReason, '— still executing');
     else console.log('[MCP-Anthropic] Received tool_calls:', toolCalls.size);
     const assistantMsg: any = {
@@ -389,7 +489,11 @@ async function streamAnthropic(
     console.log('[MCP-Anthropic] Continuing stream after tool execution...');
     const continued = await streamAnthropic(provider, model, messages, callbacks, options, tools);
     if (continued) fullText += (fullText ? "\n\n" : "") + continued;
-    else if (!fullText) fullText = "Tools executed successfully.";
+    else if (!fullText) {
+      const names = [...toolCalls.values()].map((t) => t.name).filter(Boolean).join(", ");
+      fullText = names ? `Tools executed: ${names}.` : "Tools executed successfully.";
+    }
+    } // else: tool rounds remaining
   }
 
   return fullText;
@@ -403,6 +507,7 @@ async function streamOllama(
   options?: StreamOptions,
   tools?: ToolDefinition[]
 ) {
+  options?.signal?.throwIfAborted?.();
   const body: any = {
     model,
     messages,
@@ -418,6 +523,7 @@ async function streamOllama(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
+    signal: options?.signal,
   });
 
   if (!response.ok) {
@@ -440,6 +546,7 @@ async function streamOllama(
 
   while (true) {
     const { done, value } = await reader.read();
+    if (options?.signal?.aborted) throw new DOMException("Aborted", "AbortError");
     if (done) break;
 
     buffer += decoder.decode(value, { stream: true });
@@ -481,6 +588,10 @@ async function streamOllama(
   }
 
   if (toolCalls.size > 0) {
+    toolRound++;
+    if (toolRound > MAX_TOOL_ROUNDS) {
+      fullText += (fullText ? "\n\n" : "") + `[Tool limit reached (${MAX_TOOL_ROUNDS} rounds) — answering with collected results.]`;
+    } else {
     console.log('[MCP-Ollama] Received tool_calls:', toolCalls.size);
     const assistantMsg: any = { role: "assistant", content: fullText || "", tool_calls: [] };
     for (const [, tc] of toolCalls) {
@@ -505,7 +616,11 @@ async function streamOllama(
     console.log('[MCP-Ollama] Continuing stream after tool execution...');
     const continued = await streamOllama(provider, model, messages, callbacks, options, tools);
     if (continued) fullText += (fullText ? "\n\n" : "") + continued;
-    else if (!fullText) fullText = "Tools executed successfully.";
+    else if (!fullText) {
+      const names = [...toolCalls.values()].map((t) => t.function.name).filter(Boolean).join(", ");
+      fullText = names ? `Tools executed: ${names}.` : "Tools executed successfully.";
+    }
+    } // else: tool rounds remaining
   }
 
   return fullText;
@@ -535,6 +650,7 @@ async function streamResponsesAPI(
   callbacks: StreamCallbacks,
   options?: StreamOptions,
 ) {
+  options?.signal?.throwIfAborted?.();
   const input = messages.map((m) => ({
     role: m.role === "assistant" ? "assistant" : "user",
     content: m.content,
@@ -559,6 +675,7 @@ async function streamResponsesAPI(
     method: "POST",
     headers,
     body: JSON.stringify(body),
+    signal: options?.signal,
   });
 
   if (!response.ok) {
@@ -575,6 +692,7 @@ async function streamResponsesAPI(
 
   while (true) {
     const { done, value } = await reader.read();
+    if (options?.signal?.aborted) throw new DOMException("Aborted", "AbortError");
     if (done) break;
 
     buffer += decoder.decode(value, { stream: true });
@@ -620,12 +738,19 @@ export async function sendMessageStream(
   const provider = providerService.getProvider(providerId);
   if (!provider) throw new Error(`Provider "${providerId}" not found`);
 
+  // One live generation: abort any previous stream, then own the slot.
+  try { activeStreamAbort?.abort(); } catch {}
+  const ctrl = new AbortController();
+  activeStreamAbort = ctrl;
+  const opts: StreamOptions = { ...options, signal: ctrl.signal };
+  toolRound = 0;
+
   try {
     // ── OpenCode Zen: route based on model type ───────────────────────────
     if (provider.id === "opencodezen") {
       if (!provider.apiKey) throw new Error(`API key not configured for ${provider.name}. Get one at https://opencode.ai/zen`);
       const endpoint = getOpenCodeZenEndpoint(model);
-      const apiMessages = buildOpenAIMessages(messages, options?.systemPrompt);
+      const apiMessages = buildOpenAIMessages(messages, opts?.systemPrompt);
 
       if (endpoint === "responses") {
         // GPT / Grok / Muse → Responses API
@@ -634,13 +759,13 @@ export async function sendMessageStream(
         if (tools && tools.length > 0) {
           console.warn(`[OpenCode Zen] Model ${model} normally uses Responses API, but MCP tools are ON → falling back to /v1/chat/completions to guarantee ToolCall display`);
           try {
-            return await streamOpenAI(provider, model, apiMessages, callbacks, options, tools);
+            return await streamOpenAI(provider, model, apiMessages, callbacks, opts, tools);
           } catch (e: any) {
             console.warn("[OpenCode Zen] chat/completions fallback failed, retrying Responses API without tools:", e?.message);
-            return await streamResponsesAPI(provider.baseUrl, provider.apiKey, model, apiMessages, callbacks, options);
+            return await streamResponsesAPI(provider.baseUrl, provider.apiKey, model, apiMessages, callbacks, opts);
           }
         }
-        return await streamResponsesAPI(provider.baseUrl, provider.apiKey, model, apiMessages, callbacks, options);
+        return await streamResponsesAPI(provider.baseUrl, provider.apiKey, model, apiMessages, callbacks, opts);
       }
       if (endpoint === "anthropic") {
         // Claude / Qwen → Anthropic Messages API via OpenCode Zen
@@ -653,13 +778,13 @@ export async function sendMessageStream(
           } else if (m.role === "tool") {
             richMessages.push({ role: "tool", content: m.content, tool_call_id: m.toolCallId });
           } else {
-            richMessages.push({ role: m.role === "assistant" ? "assistant" : "user", content: m.content });
+            richMessages.push({ role: m.role === "assistant" ? "assistant" : "user", content: m.content, attachments: (m as any).attachments });
           }
         }
-        return await streamAnthropic(anthropicProvider, model, richMessages as any, callbacks, options, tools);
+        return await streamAnthropic(anthropicProvider, model, richMessages as any, callbacks, opts, tools);
       }
       // DeepSeek / GLM / Kimi / MiniMax / Free → standard chat/completions
-      return await streamOpenAI(provider, model, apiMessages, callbacks, options, tools);
+      return await streamOpenAI(provider, model, apiMessages, callbacks, opts, tools);
     }
 
     // ── Standard routing ───────────────────────────────────────────────────
@@ -668,7 +793,7 @@ export async function sendMessageStream(
       const apiMessages = messages
         .filter((m) => m.role !== "system")
         .map((m) => {
-          const base: any = { role: m.role === "assistant" ? "assistant" : "user" };
+          const base: any = { role: m.role === "assistant" ? "assistant" : "user", attachments: (m as any).attachments };
           if (m.role === "tool") {
             base.role = "user";
             base.content = `[Tool ${m.toolCallId} result]: ${m.content}`;
@@ -685,20 +810,25 @@ export async function sendMessageStream(
         } else if (m.role === "tool") {
           richMessages.push({ role: "tool", content: m.content, tool_call_id: m.toolCallId });
         } else {
-          richMessages.push({ role: m.role, content: m.content });
+          richMessages.push({ role: m.role, content: m.content, attachments: (m as any).attachments });
         }
       }
       const finalMessages = richMessages.length > 0 && tools ? richMessages : apiMessages;
-      return await streamAnthropic(provider, model, finalMessages as any, callbacks, options, tools);
+      return await streamAnthropic(provider, model, finalMessages as any, callbacks, opts, tools);
     }
     if (provider.type === "ollama") {
-      const apiMessages = buildOpenAIMessages(messages, options?.systemPrompt);
-      return await streamOllama(provider, model, apiMessages, callbacks, options, tools);
+      // Ollama /api/chat wants { content: string, images?: [] } — not OpenAI parts.
+      const apiMessages = toOllamaMessages(buildOpenAIMessages(messages, opts?.systemPrompt));
+      return await streamOllama(provider, model, apiMessages, callbacks, opts, tools);
     }
-    const apiMessages = buildOpenAIMessages(messages, options?.systemPrompt);
-    return await streamOpenAI(provider, model, apiMessages, callbacks, options, tools);
+    const apiMessages = buildOpenAIMessages(messages, opts?.systemPrompt);
+    return await streamOpenAI(provider, model, apiMessages, callbacks, opts, tools);
   } catch (err: any) {
+    if (activeStreamAbort === ctrl) activeStreamAbort = null;
+    // Aborted by user — not an error, stay silent so no fake error bubble appears.
+    if (ctrl.signal.aborted || err?.name === "AbortError") throw err;
     callbacks.onError(err.message ?? "Unknown error");
     throw err;
   }
+  if (activeStreamAbort === ctrl) activeStreamAbort = null;
 }

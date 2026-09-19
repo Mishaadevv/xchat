@@ -110,8 +110,22 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const [editText, setEditText] = useState(message.content);
   const isUser = message.role === "user";
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(message.content);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(message.content);
+    } catch {
+      // Clipboard API blocked (permissions / insecure context) — legacy fallback
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = message.content;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      } catch {}
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
