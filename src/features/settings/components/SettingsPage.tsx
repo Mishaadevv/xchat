@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Eye, EyeOff, Check, Plus, RefreshCw, Trash2, Server, Wifi, WifiOff, Sun, Moon, Monitor, Search, Filter, ExternalLink, Sparkles } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -13,11 +13,13 @@ import { settingsStore } from "@/services/settingsStore";
 import { onboardingStore } from "@/features/onboarding/services/onboardingStore";
 import { getDownloadedModels } from "@/services/downloads";
 import { navVisibility, type NavId } from "@/services/navVisibility";
-import { Blocks, Folder, Brain, Database, Store, Download, Puzzle } from "lucide-react";
+import { Blocks, Folder, Brain, Database, Store, Download, Puzzle, Terminal, HardDriveDownload, Cpu } from "lucide-react";
+import { pythonEnv, hasNvidiaGpu, type InterpreterInfo } from "@/services/pythonEnv";
 
 const categories = [
   { id: "providers", label: "Providers" },
   { id: "general", label: "General" },
+  { id: "python", label: "Python & Training" },
   { id: "appearance", label: "Appearance" },
   { id: "chat", label: "Chat" },
   { id: "navigation", label: () => i18n.t("settings.navigation") },
@@ -434,6 +436,8 @@ export function SettingsPage() {
             </div>
           )}
 
+          {active === "python" && <PythonSettings />}
+
           {active === "appearance" && (
             <div className="space-y-4">
               <h2 className="text-sm font-semibold mb-1">Appearance</h2>
@@ -496,6 +500,116 @@ export function SettingsPage() {
           )}
         </div>
       </ScrollArea>
+    </div>
+  );
+}
+
+/**
+ * Real Python environment management: scan interpreters, pick one, create the
+ * app venv and install the ML runtime — with live pip output, not a stub.
+ */
+function PythonSettings() {
+  const env = useStore(pythonEnv.subscribe, pythonEnv.getState);
+  const [cuda, setCuda] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    pythonEnv.getState().interpreters.length === 0 && pythonEnv.scan();
+    hasNvidiaGpu().then(setCuda);
+  }, []);
+
+  const scan = () => void pythonEnv.scan();
+  const install = () => void pythonEnv.installRuntime({ cuda: cuda ?? undefined });
+  const makeVenv = () => void pythonEnv.createVenv();
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <h2 className="text-sm font-semibold mb-1 flex items-center gap-2"><Terminal className="h-4 w-4" /> Python & Training</h2>
+        <p className="text-xs text-muted-foreground mb-4">
+          Every interpreter on this machine is probed for real: version, usability and torch.
+          Training runs with the interpreter you pick — never with a guessed PATH name.
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <Button size="sm" variant="outline" onClick={scan} disabled={env.scanning}>
+          <RefreshCw className={cn("h-3.5 w-3.5 mr-1.5", env.scanning && "animate-spin")} />
+          {env.scanning ? "Scanning…" : "Rescan"}
+        </Button>
+        {cuda != null && (
+          <Badge variant={cuda ? "default" : "secondary"} className="text-[10px]">
+            <Cpu className="h-3 w-3 mr-1" />{cuda ? "NVIDIA GPU — CUDA torch" : "no NVIDIA GPU — CPU torch"}
+          </Badge>
+        )}
+      </div>
+
+      {env.lastError && (
+        <p className="text-xs text-red-500 bg-red-500/10 rounded-lg px-3 py-2">{env.lastError}</p>
+      )}
+
+      <div className="border border-border rounded-xl divide-y">
+        {env.interpreters.length === 0 && !env.scanning && (
+          <p className="px-4 py-3 text-xs text-muted-foreground">
+            No Python 3.10–3.13 found. Install Python 3.12 from python.org, then rescan.
+          </p>
+        )}
+        {env.interpreters.map((interp: InterpreterInfo) => {
+          const active = env.selected === interp.executable;
+          return (
+            <div key={interp.executable} className={cn("px-4 py-3", active && "bg-accent/40")}>
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium">
+                    Python {interp.version}
+                    {interp.hasTorch && <Badge variant="default" className="ml-2 text-[10px]">torch ready</Badge>}
+                    {interp.venvPython && <Badge variant="secondary" className="ml-1.5 text-[10px]">app venv</Badge>}
+                  </p>
+                  <p className="text-[11px] text-muted-foreground truncate" title={interp.executable}>
+                    {interp.executable} · {interp.source}
+                  </p>
+                </div>
+                <div className="flex gap-1.5 shrink-0">
+                  {!active && (
+                    <Button size="sm" variant="outline" onClick={() => void pythonEnv.select(interp.executable)}>
+                      Use
+                    </Button>
+                  )}
+                  {active && !interp.venvPython && (
+                    <Button size="sm" variant="outline" onClick={makeVenv} disabled={env.installing}>
+                      Create venv
+                    </Button>
+                  )}
+                  {active && (
+                    <Button size="sm" onClick={install} disabled={env.installing}>
+                      <HardDriveDownload className="h-3.5 w-3.5 mr-1.5" />
+                      {env.installing ? "Installing…" : interp.hasTorch ? "Reinstall" : "Install torch + ML"}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {env.installing && (
+        <div className="border border-border rounded-xl p-3 space-y-2">
+          <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
+            <div
+              className="h-full bg-primary transition-all"
+              style={{ width: `${env.installProgress ?? 5}%` }}
+            />
+          </div>
+          <pre className="text-[10px] leading-4 max-h-40 overflow-y-auto font-mono text-muted-foreground whitespace-pre-wrap">
+            {env.installLog.slice(-12).join("\n") || "Preparing pip…"}
+          </pre>
+        </div>
+      )}
+
+      <p className="text-[11px] text-muted-foreground leading-relaxed">
+        The ML runtime installs into an isolated venv inside the app data folder —
+        your system Python is never modified. CPU torch is ~300 MB, CUDA ~2.5 GB.
+      </p>
     </div>
   );
 }

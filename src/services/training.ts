@@ -1,4 +1,5 @@
 import { isTauri as isTauriEnv } from "@/lib/platform";
+import { pythonEnv } from "@/services/pythonEnv";
 
 export interface PythonEnv {
   available: boolean;
@@ -43,6 +44,8 @@ export interface DatasetInfo {
   source: string;
   path: string;
   builtin?: boolean;
+  /** The built-in used when nothing has been chosen. */
+  default?: boolean;
   lang?: string;
 }
 
@@ -60,6 +63,7 @@ let trainingProgress: TrainingProgress = {
   progress: 0, step: 0, total_steps: 0, loss: null, epoch: 0, message: "",
 };
 let currentJobId: string | null = null;
+let currentProcPid: number | null = null;
 let outputDir: string | null = null;
 
 const listeners = new Set<() => void>();
@@ -106,6 +110,44 @@ const DEFAULT_BILINGUAL: DatasetInfo = {
   lang: "bilingual",
 };
 
+// ── Bundled Zeqou datasets ──────────────────────────────────────────────────
+// Ship inside the app (AIens/datasets/zeqou — AIens is a bundle resource), so
+// they are available with no import. The entry marked `default` is what runs
+// when the user has not picked a dataset of their own.
+const ZEQOU_BUILTINS: DatasetInfo[] = [
+  { id: "zeqou_v2", name: "Zeqou Default v2 — EN→RU translation + thinking", size: 12316, format: "json", source: "builtin", path: "AIens/datasets/zeqou/dataset_v2.json", builtin: true, default: true, lang: "EN→RU" },
+  { id: "zeqou_v1", name: "Zeqou Default v1 — EN→RU translation pairs", size: 3566, format: "json", source: "builtin", path: "AIens/datasets/zeqou/dataset.json", builtin: true, lang: "EN→RU" },
+  { id: "zeqou_dialog_ru_en", name: "Dialogue — Russian ↔ English", size: 550, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/dialog_ru_en_1.json", builtin: true, lang: "RU/EN" },
+  { id: "zeqou_dialog_es_fr", name: "Dialogue — Spanish ↔ French", size: 550, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/dialog_es_fr_2.json", builtin: true, lang: "ES/FR" },
+  { id: "zeqou_dialog_de_zh", name: "Dialogue — German ↔ Chinese", size: 550, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/dialog_de_zh_3.json", builtin: true, lang: "DE/ZH" },
+  { id: "zeqou_dialog_ja_mix", name: "Dialogue — Japanese & mixed", size: 400, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/dialog_ja_mix_4.json", builtin: true, lang: "JA/mix" },
+  { id: "zeqou_code_python", name: "Code — Python", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/code_python_5.json", builtin: true, lang: "code" },
+  { id: "zeqou_code_jvm", name: "Code — JVM", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/code_jvm_6.json", builtin: true, lang: "code" },
+  { id: "zeqou_code_web", name: "Code — Web", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/code_web_7.json", builtin: true, lang: "code" },
+  { id: "zeqou_code_sys", name: "Code — Systems", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/code_sys_8.json", builtin: true, lang: "code" },
+  { id: "zeqou_code_ops", name: "Code — Ops & CLI", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/code_ops_9.json", builtin: true, lang: "code" },
+  { id: "zeqou_sci_math", name: "Science — Math", size: 600, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/sci_math_10.json", builtin: true, lang: "sci" },
+  { id: "zeqou_sci_phys", name: "Science — Physics", size: 600, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/sci_phys_11.json", builtin: true, lang: "sci" },
+  { id: "zeqou_sci_school", name: "Science — School", size: 550, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/sci_school_12.json", builtin: true, lang: "sci" },
+  { id: "zeqou_sci_cs", name: "Science — Computer Science", size: 550, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/sci_cs_13.json", builtin: true, lang: "sci" },
+  { id: "zeqou_tech_mcp", name: "Tech — MCP", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/tech_mcp_14.json", builtin: true, lang: "tech" },
+  { id: "zeqou_tech_tools", name: "Tech — Tools", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/tech_tools_15.json", builtin: true, lang: "tech" },
+  { id: "zeqou_tech_info", name: "Tech — Info & DevOps", size: 600, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/tech_info_16.json", builtin: true, lang: "tech" },
+  { id: "zeqou_external", name: "External scenarios (multi-language)", size: 300, format: "json", source: "builtin", path: "AIens/datasets/zeqou/parts/external_17.json", builtin: true, lang: "mix" },
+  { id: "zeqou_add_ru", name: "Zeqou v1 add-on — Russian", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/v1add/d1_ru_500.json", builtin: true, lang: "RU" },
+  { id: "zeqou_add_en", name: "Zeqou v1 add-on — English", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/v1add/d2_en_500.json", builtin: true, lang: "EN" },
+  { id: "zeqou_add_es", name: "Zeqou v1 add-on — Spanish", size: 457, format: "json", source: "builtin", path: "AIens/datasets/zeqou/v1add/d3_es_500.json", builtin: true, lang: "ES" },
+  { id: "zeqou_add_fr", name: "Zeqou v1 add-on — French", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/v1add/d4_fr_500.json", builtin: true, lang: "FR" },
+  { id: "zeqou_add_de", name: "Zeqou v1 add-on — German", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/v1add/d5_de_500.json", builtin: true, lang: "DE" },
+  { id: "zeqou_add_ja", name: "Zeqou v1 add-on — Japanese", size: 500, format: "json", source: "builtin", path: "AIens/datasets/zeqou/v1add/d7_ja_500.json", builtin: true, lang: "JA" },
+];
+
+/** All bundled datasets, the recommended default first. */
+const BUILTIN_DATASETS: DatasetInfo[] = [...ZEQOU_BUILTINS, DEFAULT_BILINGUAL];
+
+/** What runs when no dataset has been chosen. */
+export const DEFAULT_DATASET_ID = "zeqou_v2";
+
 export const trainingService = {
   subscribe: (listener: () => void) => {
     listeners.add(listener);
@@ -120,51 +162,44 @@ export const trainingService = {
   }),
 
   async checkEnvironment(): Promise<PythonEnv> {
-    // Try Rust first
+    // Real scan: find every interpreter, honour the user's choice, probe torch.
     try {
-      const env = await invokeRust<PythonEnv>("check_python");
-      if (env) return env;
+      const check = await pythonEnv.quickCheck();
+      return {
+        available: check.available,
+        version: check.available
+          ? (check.detail || check.version || "Python found")
+          : (check.detail || "No usable Python 3.10–3.13 found"),
+        dependencies: { torch: check.hasTorch },
+      };
     } catch {}
-    // Fallback: try shell python --version (Tauri) or just report web mode
     const isTauri = isTauriEnv();
     if (!isTauri) {
       return { available: false, version: "Web mode — requires Tauri desktop for training", dependencies: {} };
     }
-    try {
-      const { Command } = await import("@tauri-apps/plugin-shell");
-      let out: any;
-      try {
-        out = await (Command as any).create("python", ["--version"]).execute();
-      } catch {
-        out = await (Command as any).create("python3", ["--version"]).execute();
-      }
-      const ver = (out.stdout || out.stderr || "").trim() || "Python found";
-      const available = out.code === 0 && ver.toLowerCase().includes("python");
-      return { available, version: ver, dependencies: {} };
-    } catch {
-      return { available: false, version: "", dependencies: {} };
-    }
+    return { available: false, version: "No Python 3.10–3.13 found — install Python 3.12 and rescan in Settings", dependencies: {} };
   },
 
   getBuiltinDatasets(): DatasetInfo[] {
-    return [DEFAULT_BILINGUAL];
+    return BUILTIN_DATASETS;
   },
 
   async importDataset(path: string): Promise<DatasetInfo | null> {
     try {
       const filename = path.split(/[/\\]/).pop() || "dataset.json";
-      // Try to count records quickly via python helper or just set 0 and let training count later
+      // Count records with the *selected* interpreter via proc_start (the
+      // shell-scope forbids "python"; the old stub silently caught the error).
       let size = 0;
       try {
-        const { invoke } = await import("@tauri-apps/api/core");
-        // try to use training_data.count_records_fast if available via python shell
-        const { Command } = await import("@tauri-apps/plugin-shell");
-        const code = `import sys; sys.path.insert(0, 'AIens'); from training_data import count_records_fast; print(count_records_fast(r"${path.replace(/"/g, '\\"')}"))`;
-        let out: any;
-        try { out = await (Command as any).create("python", ["-c", code]).execute(); }
-        catch { out = await (Command as any).create("python3", ["-c", code]).execute(); }
-        const n = parseInt((out.stdout || "").trim());
-        if (!isNaN(n)) size = n;
+        const { runProc } = await import("@/services/pythonEnv");
+        const pyExe = pythonEnv.activeExecutable();
+        if (pyExe) {
+          const aiens = await invokeRust<string>("get_aiens_dir").catch(() => "AIens");
+          const code = `import sys; sys.path.insert(0, r"${aiens.replace(/"/g, '')}"); from training_data import count_records_fast; print(count_records_fast(r"${path.replace(/"/g, '')}"))`;
+          const out = await runProc(pyExe, ["-c", code], aiens, 20_000);
+          const n = parseInt((out.stdout || "").trim().split(/\r?\n/).pop() || "0");
+          if (!isNaN(n)) size = n;
+        }
       } catch {}
       const dataset: DatasetInfo = {
         id: `local_${Date.now()}`,
@@ -189,7 +224,7 @@ export const trainingService = {
   },
 
   getDatasets(): DatasetInfo[] {
-    return [...this.getBuiltinDatasets(), ...loadDatasets()];
+    return [...BUILTIN_DATASETS, ...loadDatasets()];
   },
 
   async startTraining(config: TrainingConfig): Promise<boolean> {
@@ -205,142 +240,118 @@ export const trainingService = {
     notify();
 
     try {
-      // Resolve dataset path: "builtin" or empty -> default bilingual
-      let datasetPath = config.dataset_path;
-      if (!datasetPath || datasetPath === "builtin" || datasetPath === DEFAULT_BILINGUAL.id) {
-        datasetPath = DEFAULT_BILINGUAL.path;
+      // The chosen interpreter (venv if present) — never a guessed PATH name.
+      const pyExe = pythonEnv.activeExecutable();
+      if (!pyExe) {
+        throw new Error("Python not configured — open Settings → Python & Training, pick an interpreter and install the ML runtime");
       }
-      // If custom dataset id, resolve to actual path
-      const custom = loadDatasets().find(d => d.id === datasetPath || d.path === datasetPath);
-      if (custom) datasetPath = custom.path;
+      const { invoke } = await import("@tauri-apps/api/core");
+      const { listen } = await import("@tauri-apps/api/event");
+      const { appDataDir, join } = await import("@tauri-apps/api/path");
 
-      // Try to get AIens dir via Rust, fallback to relative
+      // AIens lives next to the app (dev) or in resources (installed build).
       let aiensDir = "AIens";
       try {
         aiensDir = await invokeRust<string>("get_aiens_dir");
-      } catch {
-        try {
-          const { appDataDir, join } = await import("@tauri-apps/api/path");
-          const base = await appDataDir();
-          // In dev, AIens is in project root; in prod, it may be in resource dir
-          // Try to use relative AIens first, fallback to appData
-          aiensDir = base; // will be overridden by python's path handling
-        } catch {}
+      } catch {}
+
+      // Resolve the dataset: a built-in id becomes its bundled path, a custom
+      // entry its real path, and with nothing chosen the bundled default runs.
+      let datasetPath = config.dataset_path || DEFAULT_DATASET_ID;
+      if (datasetPath === "builtin") datasetPath = DEFAULT_DATASET_ID;
+      const builtin = BUILTIN_DATASETS.find(d => d.id === datasetPath);
+      if (builtin) datasetPath = builtin.path;
+      const custom = loadDatasets().find(d => d.id === datasetPath || d.path === datasetPath);
+      if (custom) datasetPath = custom.path;
+      if (!/^(?:[A-Za-z]:[\\/]|\/)/.test(datasetPath)) {
+        // Relative (builtin "AIens/datasets/...") — anchor it to the real AIens dir.
+        datasetPath = `${aiensDir.replace(/[\\/]+$/, "")}/${datasetPath.replace(/^AIens[\\/]/, "")}`;
       }
 
-      // Build job config similar to MCP training
       const jobId = `job_${Date.now()}`;
       currentJobId = jobId;
 
-      // Use shell to run training_worker.py / lora_trainer.py directly (Aider-style: use SEARCH/REPLACE dataset)
-      const { Command } = await import("@tauri-apps/plugin-shell");
       const fullConfig = {
         ...config,
         dataset_path: datasetPath,
         aiens_dir: aiensDir,
-        // Aider-inspired defaults: use code-aware tokenization, keep context
         d_model: (config as any).d_model || 256,
         nhead: (config as any).nhead || 4,
       };
 
-      // Create job file via python (to handle paths correctly)
-      const jobJson = JSON.stringify({
+      // Create the job file directly — no python round-trip needed for JSON.
+      const fsmod = await import("@tauri-apps/plugin-fs");
+      const fs = fsmod as unknown as { mkdir: (p: string, o?: any) => Promise<void>; writeTextFile: (p: string, c: string) => Promise<void>; exists: (p: string) => Promise<boolean> };
+      const jobsDir = await join(aiensDir, "training_jobs");
+      try { await fs.mkdir(jobsDir, { recursive: true }); } catch {}
+      const jobPath = await join(jobsDir, `${jobId}.json`);
+      const modelOutDir = await join(aiensDir, "trained_models", config.name);
+      const stopFile = await join(jobsDir, `${jobId}.stop`);
+      // Absolute paths: the worker resolves dataset/output paths as-is, so a
+      // relative "AIens/..." here would double up under cwd=AIens.
+      await fs.writeTextFile(jobPath, JSON.stringify({
         id: jobId,
-        output_dir: `AIens/trained_models/${config.name}`,
+        output_dir: modelOutDir,
         config: fullConfig,
-        stop_file: `AIens/training_jobs/${jobId}.stop`,
-      });
+        stop_file: stopFile,
+      }, null, 2));
 
-      const pySetup = `
-import json, os, sys
-from pathlib import Path
-job = json.loads(r'''${jobJson.replace(/'/g, "\\'")}''')
-out = Path(job["output_dir"])
-out.mkdir(parents=True, exist_ok=True)
-job_path = Path(f"AIens/training_jobs/{job['id']}.json")
-job_path.parent.mkdir(parents=True, exist_ok=True)
-job_path.write_text(json.dumps(job, ensure_ascii=False, indent=2), encoding="utf-8")
-print(str(job_path))
-`;
-      let setupOut: any;
-      try {
-        setupOut = await (Command as any).create("python", ["-c", pySetup]).execute();
-      } catch {
-        setupOut = await (Command as any).create("python3", ["-c", pySetup]).execute();
-      }
-      if (setupOut.code !== 0) throw new Error(setupOut.stderr || setupOut.stdout || "Failed to create job file");
-      const jobPath = (setupOut.stdout || "").trim().split("\n").pop()?.trim() || `AIens/training_jobs/${jobId}.json`;
-
-      trainingProgress = { ...trainingProgress, progress: 5, message: "Запуск обучения (Aider-style)..." };
+      trainingProgress = { ...trainingProgress, progress: 5, message: `Запуск обучения (${pyExe.split(/[\\/]/).pop()})...` };
       notify();
 
-      // Choose worker: lora_trainer.py for lora, training_worker.py for scratch (Aider uses scratch-like for code edits)
-      const worker = config.mode === "lora" ? "AIens/lora_trainer.py" : "AIens/training_worker.py";
-      const fallbackWorker = "AIens/training_worker.py";
+      // Choose worker: lora_trainer.py for lora, training_worker.py for scratch.
+      const workerName = config.mode === "lora" ? "lora_trainer.py" : "training_worker.py";
+      let worker = await join(aiensDir, workerName);
+      if (!(await fs.exists(worker))) worker = await join(aiensDir, "training_worker.py");
 
-      // Run training and stream progress via stdout parsing
-      const runCode = `
-import subprocess, sys, json, time, os
-from pathlib import Path
-job_path = r"${jobPath.replace(/\\/g, "\\\\")}"
-worker = r"${worker}"
-if not Path(worker).exists():
-    worker = r"${fallbackWorker}"
-print(json.dumps({"event":"training-status","detail":{"message":f"Worker: {worker}","phase":"worker_start"}}), flush=True)
-proc = subprocess.Popen([sys.executable, worker, "--job", job_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
-for line in proc.stdout:
-    line=line.strip()
-    if not line: continue
-    try:
-        obj=json.loads(line)
-        print(json.dumps(obj), flush=True)
-    except:
-        print(json.dumps({"event":"training-progress","detail":{"message":line}}), flush=True)
-proc.wait()
-sys.exit(proc.returncode or 0)
-`;
-      // Execute and stream
-      let cmd: any;
-      try {
-        cmd = (Command as any).create("python", ["-c", runCode]);
-      } catch {
-        cmd = (Command as any).create("python3", ["-c", runCode]);
-      }
-      // Use sidecar-like streaming via Command events
-      const output = await new Promise<string>((resolve, reject) => {
-        let stdout = "";
-        let stderr = "";
-        // Tauri shell Command has .stdout etc? Use execute and capture
-        cmd.execute().then((res: any) => {
-          const full = [res.stdout, res.stderr].filter(Boolean).join("\n");
-          if (res.code === 0) resolve(full);
-          else reject(new Error(full || `Exit ${res.code}`));
-        }).catch(reject);
-        // Also try to listen to progress via events if available
+      // Stream the worker's JSON protocol lines into progress state.
+      const unLog = await listen<[string, string]>("proc-log", (e) => {
+        const [tag, line] = e.payload;
+        if (tag !== jobId) return;
         try {
-          (cmd as any).stdout?.on?.("data", (line: string) => {
-            try {
-              const obj = JSON.parse(line);
-              if (obj.event === "training-progress") {
-                const d = obj.detail;
-                trainingProgress = {
-                  progress: d.progress ?? trainingProgress.progress,
-                  step: d.step ?? trainingProgress.step,
-                  total_steps: d.total_steps ?? trainingProgress.total_steps,
-                  loss: d.loss ?? trainingProgress.loss,
-                  epoch: d.epoch ?? trainingProgress.epoch,
-                  message: d.message || trainingProgress.message,
-                };
-                notify();
-              } else if (obj.event === "training-status") {
-                trainingProgress = { ...trainingProgress, message: obj.detail?.message || trainingProgress.message };
-                notify();
-              }
-            } catch {}
-            stdout += line;
-          });
-        } catch {}
+          const obj = JSON.parse(line);
+          const d = obj.detail ?? obj;
+          if (obj.event === "training-progress" || obj.event === "training-status") {
+            trainingProgress = {
+              progress: d.progress ?? trainingProgress.progress,
+              step: d.step ?? trainingProgress.step,
+              total_steps: d.total_steps ?? trainingProgress.total_steps,
+              loss: typeof d.loss === "number" ? d.loss : trainingProgress.loss,
+              epoch: d.epoch ?? trainingProgress.epoch,
+              message: d.message || d.phase || trainingProgress.message,
+            };
+            notify();
+          }
+        } catch {
+          // Plain stderr/log lines still update the message so the user sees life.
+          if (line.trim()) {
+            trainingProgress = { ...trainingProgress, message: line.trim().slice(0, 160) };
+            notify();
+          }
+        }
       });
+
+      // Run the worker with the SELECTED interpreter, wait for exit.
+      const exitCode = await new Promise<number | null>((resolve, reject) => {
+        const unExit = listen<[string, number | null]>("proc-exit", (e) => {
+          if (e.payload[0] === jobId) {
+            unExit.then((f) => f());
+            resolve(e.payload[1]);
+          }
+        });
+        invoke<number>("proc_start", {
+          id: jobId,
+          program: pyExe,
+          args: [worker, "--job", jobPath],
+          cwd: aiensDir,
+        }).then((pid) => { currentProcPid = pid; })
+          .catch((err) => reject(err instanceof Error ? err : new Error(String(err))));
+      });
+      unLog();
+
+      if (exitCode !== 0 && exitCode !== null) {
+        throw new Error(`Тренер завершился с кодом ${exitCode} — подробности в сообщении выше`);
+      }
 
       // If we reach here, training succeeded (or at least process exited 0)
       const model: TrainedModel = {
@@ -351,7 +362,7 @@ sys.exit(proc.returncode or 0)
         epochs: config.epochs,
         final_loss: trainingProgress.loss,
         size: "?",
-        path: `AIens/trained_models/${config.name}`,
+        path: modelOutDir,
         status: "ready",
         created: new Date().toISOString(),
       };
@@ -373,8 +384,17 @@ sys.exit(proc.returncode or 0)
   },
 
   stopTraining() {
-    try { invokeRust("stop_training").catch(() => {}); } catch {}
+    // Kill the whole worker tree by pid (taskkill /T on Windows), plus the
+    // stop-file handshake the trainers already understand.
+    (async () => {
+      try {
+        const { invoke } = await import("@tauri-apps/api/core");
+        if (currentProcPid) await invoke("proc_stop", { pid: currentProcPid });
+      } catch {}
+      try { await invokeRust("stop_training"); } catch {}
+    })();
     trainingActive = false;
+    currentProcPid = null;
     trainingProgress = { ...trainingProgress, message: "Остановлено пользователем" };
     notify();
   },

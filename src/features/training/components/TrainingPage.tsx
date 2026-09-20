@@ -1,20 +1,41 @@
 import { useState, useEffect } from "react";
-import { Brain, Play, Square, Trash2, Upload, Database, Settings2, BarChart3, BookOpen, CheckCircle2, AlertCircle, Clock, Plus, Languages, Code2, Eye, RefreshCw } from "lucide-react";
+import { Brain, Play, Square, Trash2, Upload, Database, Settings2, BarChart3, BookOpen, CheckCircle2, AlertCircle, Clock, Plus, Languages, Code2, Eye, RefreshCw, MessageSquare } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useStore } from "@/lib/useStore";
 import { cn } from "@/lib/utils";
 import { trainingStore } from "../store/trainingStore";
-import type { TrainingConfig, DatasetInfo, TrainedModel } from "@/services/training";
+import { DEFAULT_DATASET_ID, type TrainingConfig, type DatasetInfo, type TrainedModel } from "@/services/training";
+import { trainedServing } from "@/services/trainedServing";
+import { chatStore } from "@/features/chat/store/chatStore";
+import { appStore } from "@/app/store/appStore";
 import { i18n } from "@/services/i18n";
 
 export function TrainingPage() {
-  const { trainingActive, trainingProgress, datasets, models } = useStore(
+  const { trainingActive, trainingProgress, models } = useStore(
     trainingStore.subscribe,
     trainingStore.getState
   );
   const locale = useStore(i18n.subscribe, i18n.getLocale);
+  const serving = useStore(trainedServing.subscribe, trainedServing.getState);
+
+  /** Serve this trained model on the local OpenAI-compatible endpoint and
+   *  jump to chat with the provider+model preselected. */
+  async function openInChat(m: TrainedModel) {
+    const already = serving.serving === m.path && (await trainedServing.isHealthy());
+    if (!already) {
+      const res = await trainedServing.start(m.path, m.name);
+      if (!res.ok) {
+        console.warn("trained serving failed:", res.error);
+        return;
+      }
+    }
+    trainedServing.attachToProviders(m.name, m.path);
+    chatStore.setProvider("zeqou-trained");
+    chatStore.setModel(m.path);
+    appStore.setView("chat");
+  }
 
   const [envReady, setEnvReady] = useState<boolean | null>(null);
   const [envMessage, setEnvMessage] = useState(i18n.t("training.checking"));
@@ -24,7 +45,7 @@ export function TrainingPage() {
   const [config, setConfig] = useState<TrainingConfig>({
     name: "my_bilingual_model",
     mode: "scratch",
-    dataset_path: "bilingual_aider_v1",
+    dataset_path: DEFAULT_DATASET_ID,
     epochs: 3,
     batch_size: 8,
     learning_rate: 0.0003,
@@ -34,29 +55,31 @@ export function TrainingPage() {
   useEffect(() => {
     trainingStore.checkEnvironment().then((env) => {
       if (env.available) {
-        setEnvReady(true);
-        setEnvMessage(`Python ${env.version} ✓`);
+        setEnvReady(env.dependencies?.torch ? true : false);
+        setEnvMessage(
+          env.dependencies?.torch
+            ? (env.version || `Python ${env.version} + torch ✓`)
+            : `${env.version} — torch не установлен (Settings → Python & Training)`,
+        );
       } else {
         setEnvReady(false);
         setEnvMessage(env.version || i18n.t("training.python_missing"));
       }
     });
-    const ds = trainingStore.getDatasets().find(d => d.id === "bilingual_aider_v1");
-    if (ds) {
-      fetch("AIens/datasets/default_bilingual_aider_v1.json").then(r=>r.json()).then(data=>{
+    // Preview whatever stands selected by default — the bundled Zeqou dataset.
+    const def = trainingStore.getDatasets().find((d) => d.builtin && d.default);
+    if (def) {
+      fetch(def.path).then(r=>r.json()).then(data=>{
         if (Array.isArray(data)) setPreview(data.slice(0,3));
       }).catch(()=>{});
     }
   }, []);
 
   const handleStart = async () => {
-    let dsPath = config.dataset_path;
-    if (!dsPath) dsPath = "bilingual_aider_v1";
-    if (dsPath === "bilingual_aider_v1") dsPath = "AIens/datasets/default_bilingual_aider_v1.json";
-    else {
-      const found = datasets.find(d => d.id === dsPath || d.path === dsPath);
-      if (found) dsPath = found.path || dsPath;
-    }
+    // The select carries builtin ids, custom entry ids and plain paths —
+    // resolve all of them to the real dataset file.
+    const dsPath = allDatasets.find(d => d.id === config.dataset_path || d.path === config.dataset_path)?.path
+      || config.dataset_path;
     await trainingStore.startTraining({ ...config, dataset_path: dsPath });
   };
 
@@ -177,8 +200,12 @@ export function TrainingPage() {
                     <label className="text-xs font-medium">{i18n.t("training.dataset")}</label>
                     <select value={config.dataset_path} onChange={(e) => setConfig({ ...config, dataset_path: e.target.value })}
                       className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm">
-                      <option value="bilingual_aider_v1">{i18n.t("training.dataset_default")}</option>
-                      {allDatasets.filter(d=> !d.builtin).map((ds) => (
+                      {allDatasets.filter((d) => d.builtin).map((ds) => (
+                        <option key={ds.id} value={ds.id}>
+                          {ds.default ? `⭐ ${ds.name}` : ds.name} ({ds.size} {locale === "ru" ? "примеров" : "samples"})
+                        </option>
+                      ))}
+                      {allDatasets.filter((d) => !d.builtin).map((ds) => (
                         <option key={ds.id} value={ds.path || ds.id}>{ds.name} ({ds.size} {locale === "ru" ? "примеров" : "samples"})</option>
                       ))}
                     </select>
@@ -349,6 +376,16 @@ export function TrainingPage() {
                             m.status.includes("ready") ? "bg-emerald-100 text-emerald-700" : "bg-secondary text-muted-foreground")}>
                             {m.status}
                           </span>
+                          <button
+                            onClick={() => void openInChat(m)}
+                            title={locale === "ru" ? "Запустить модель и открыть чат" : "Serve the model and open chat"}
+                            className={cn("h-8 px-2.5 flex items-center gap-1 rounded-lg text-xs font-medium transition-colors",
+                              serving.serving === m.path
+                                ? "text-emerald-600 bg-emerald-500/10 hover:bg-emerald-500/20"
+                                : "text-muted-foreground hover:text-foreground hover:bg-secondary")}>
+                            <MessageSquare className="h-3.5 w-3.5" />
+                            {serving.serving === m.path ? (locale === "ru" ? "В чате" : "In chat") : (locale === "ru" ? "В чат" : "Chat")}
+                          </button>
                           <button
                             onClick={() => {
                               setConfig({ ...config, base_model: m.path, name: `${m.name}-continued` });

@@ -1,4 +1,5 @@
 import { isTauri as isTauriEnv } from "@/lib/platform";
+import { pythonEnv } from "@/services/pythonEnv";
 
 export interface MCPTool {
   id: string;
@@ -1202,8 +1203,27 @@ async function runPython(code: string): Promise<MCPResult> {
   const isTauri = isTauriEnv();
   if (!isTauri) return { success: false, output: "", error: "Run Python требует Tauri. Используй run-code для JS.", duration: 0 };
   try {
-    const { Command } = await import("@tauri-apps/plugin-shell");
+    // Use the interpreter chosen in Settings (venv if present); fall back to
+    // PATH python only when the user has not configured anything yet.
+    const pyExe = pythonEnv.activeExecutable();
     let out: any;
+    if (pyExe) {
+      const { invoke, } = await import("@tauri-apps/api/core");
+      const { listen } = await import("@tauri-apps/api/event");
+      const lines: string[] = [];
+      const un = await listen<[string, string]>("proc-log", (e) => { if (e.payload[0] === "mcp-python") lines.push(e.payload[1]); });
+      await new Promise<number | null>((resolve) => {
+        const unExit = listen<[string, number | null]>("proc-exit", (e) => {
+          if (e.payload[0] === "mcp-python") { unExit.then((f) => f()); resolve(e.payload[1]); }
+        });
+        invoke("proc_start", { id: "mcp-python", program: pyExe, args: ["-c", code], cwd: null })
+          .catch(() => resolve(null));
+      });
+      un();
+      const txt = lines.join("\n");
+      return { success: true, output: txt || "(no output)", duration: 0 };
+    }
+    const { Command } = await import("@tauri-apps/plugin-shell");
     try {
       out = await (Command as any).create("python", ["-c", code]).execute();
     } catch {

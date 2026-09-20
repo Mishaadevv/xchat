@@ -9,6 +9,7 @@ Part of the [Zeqou ecosystem](https://mishaadevv.github.io/zeqou/).
 - Modern chat interface with streaming responses
 - Code highlighting (highlight.js), Markdown, KaTeX formulas
 - Provider choice: OpenAI, Anthropic, Google, OpenRouter, Ollama, custom endpoints
+- Bundled Zeqou datasets for the built-in trainer — default v2 (EN→RU translation with thinking) plus dialogue, code, science and tech parts and language packs; they stand as the default until you pick or upload your own
 - Built with Tauri 2 + React 19 — small footprint, native feel
 
 ## Develop
@@ -25,6 +26,8 @@ npm run tauri dev
 ```bash
 npm run tauri build
 ```
+
+The Windows installer is an assisted NSIS setup: it shows the PolyForm Strict 1.0.0 license before copying anything and lets you choose the installation folder.
 
 ## AIens (optional)
 

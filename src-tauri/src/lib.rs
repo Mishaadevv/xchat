@@ -1,7 +1,7 @@
 use std::io::{BufRead, BufReader};
 use std::process::{Child, Command as ProcCommand, Stdio};
 use std::sync::Mutex;
-use tauri::{Emitter, State};
+use tauri::{Emitter, Manager, State};
 
 /// Handle of the bundled llama-server sidecar (spawned from an absolute path,
 /// so no shell-scope entry is needed — the app downloads/owns the binary).
@@ -17,6 +17,112 @@ fn pump_lines<R: std::io::Read + Send + 'static>(stream: R, app: tauri::AppHandl
       }
     }
   });
+}
+
+/// Spawn an arbitrary executable by absolute path, streaming stdout/stderr as
+/// `(id, line)` events on the `proc-log` channel and the exit code on
+/// `proc-exit`. The process runs to completion on its own; the UI reaps the
+/// result from the events. This lets the app run a *chosen* Python
+/// interpreter (py launcher, venv, install dir) rather than whatever binary
+/// happens to be named `python` on PATH.
+#[tauri::command]
+fn proc_start(
+  app: tauri::AppHandle,
+  id: String,
+  program: String,
+  args: Vec<String>,
+  cwd: Option<String>,
+) -> Result<u32, String> {
+  let mut cmd = ProcCommand::new(&program);
+  cmd.args(&args)
+    .stdout(Stdio::piped())
+    .stderr(Stdio::piped())
+    .stdin(Stdio::null());
+  if let Some(dir) = &cwd {
+    cmd.current_dir(dir);
+  }
+
+  let mut child = cmd
+    .spawn()
+    .map_err(|e| format!("spawn {program} failed: {e}"))?;
+  let pid = child.id();
+
+  if let Some(out) = child.stdout.take() {
+    let app2 = app.clone();
+    let tag = id.clone();
+    std::thread::spawn(move || {
+      let reader = BufReader::new(out);
+      for line in reader.lines().map_while(Result::ok) {
+        let _ = app2.emit("proc-log", (tag.clone(), line));
+      }
+    });
+  }
+  if let Some(err) = child.stderr.take() {
+    let app2 = app.clone();
+    let tag = id.clone();
+    std::thread::spawn(move || {
+      let reader = BufReader::new(err);
+      for line in reader.lines().map_while(Result::ok) {
+        let _ = app2.emit("proc-log", (tag.clone(), line));
+      }
+    });
+  }
+  {
+    let app2 = app.clone();
+    let tag = id.clone();
+    std::thread::spawn(move || {
+      let code = child.wait().ok().and_then(|s| s.code());
+      let _ = app2.emit("proc-exit", (tag, code));
+    });
+  }
+
+  Ok(pid)
+}
+
+/// Absolute path of the AIens folder (training workers, datasets, models).
+/// Installed builds keep it in resources; `tauri dev` runs from src-tauri, so
+/// the repo root is one level up. Callers get an absolute path either way,
+/// which is what makes the job file's dataset/output paths unambiguous.
+#[tauri::command]
+fn get_aiens_dir(app: tauri::AppHandle) -> Result<String, String> {
+  if let Ok(res) = app.path().resource_dir() {
+    let cand = res.join("AIens");
+    if cand.is_dir() {
+      return Ok(cand.to_string_lossy().into_owned());
+    }
+  }
+  if let Ok(cwd) = std::env::current_dir() {
+    for base in std::iter::once(cwd.clone()).chain(cwd.parent().map(|p| p.to_path_buf())) {
+      let cand = base.join("AIens");
+      if cand.is_dir() {
+        return Ok(cand.to_string_lossy().into_owned());
+      }
+    }
+  }
+  Err("AIens directory not found".into())
+}
+
+/// Kill a process started by `proc_start` (Windows: taskkill /T /F so the
+/// whole python worker tree dies, not just the parent).
+#[tauri::command]
+fn proc_stop(pid: u32) -> Result<(), String> {
+  #[cfg(target_os = "windows")]
+  {
+    match ProcCommand::new("taskkill")
+      .args(["/PID", &pid.to_string(), "/T", "/F"])
+      .output()
+    {
+      Ok(_) => Ok(()),
+      Err(e) => Err(format!("taskkill failed: {e}")),
+    }
+  }
+  #[cfg(not(target_os = "windows"))]
+  {
+    match ProcCommand::new("kill").arg(pid.to_string()).output() {
+      Ok(_) => Ok(()),
+      Err(e) => Err(format!("kill failed: {e}")),
+    }
+  }
 }
 
 #[tauri::command]
@@ -184,7 +290,14 @@ pub fn run() {
     .plugin(tauri_plugin_autostart::init(tauri_plugin_autostart::MacosLauncher::LaunchAgent, None))
     .plugin(tauri_plugin_opener::init())
     .manage(EngineState(Mutex::new(None)))
-    .invoke_handler(tauri::generate_handler![engine_start, engine_stop, engine_unzip])
+    .invoke_handler(tauri::generate_handler![
+      engine_start,
+      engine_stop,
+      engine_unzip,
+      proc_start,
+      proc_stop,
+      get_aiens_dir
+    ])
     .setup(|_app| {
       // ensure workspace dir exists
       Ok(())

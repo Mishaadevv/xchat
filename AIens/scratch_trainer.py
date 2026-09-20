@@ -287,7 +287,14 @@ class ScratchChatbot:
             max_len=int(cfg.get("max_length", 64)) * 2 + 10,
         )
         model.load_state_dict(ckpt["model"])
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        requested = str(cfg.get("device", "auto")).lower()
+        cuda_available = torch.cuda.is_available()
+        if requested in ("cuda", "both") and cuda_available:
+            device = "cuda"
+        elif requested == "cpu":
+            device = "cpu"
+        else:
+            device = "cuda" if cuda_available else "cpu"
         model = model.to(device)
         model.eval()
         return cls(model, tok, cfg, device)
@@ -381,7 +388,18 @@ def train_scratch(config: dict, output_dir: str, emit, stop_requested) -> TrainR
         collate_fn=lambda b: collate_fn(b, tok.token2id[PAD]),
     )
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    # device config: "cuda" forces GPU (error if absent), "cpu" forces CPU,
+    # "auto"/"both" pick CUDA when it exists.
+    requested = str(config.get("device", "auto")).lower()
+    cuda_available = torch.cuda.is_available()
+    if requested == "cuda" and not cuda_available:
+        raise RuntimeError("CUDA requested but no GPU is available — switch device to CPU/auto or install the CUDA torch build.")
+    if requested in ("cuda", "both") and cuda_available:
+        device = "cuda"
+    elif requested == "cpu":
+        device = "cpu"
+    else:
+        device = "cuda" if cuda_available else "cpu"
     model = Seq2SeqTransformer(
         vocab_size=tok.vocab_size,
         d_model=int(config.get("d_model", 256)),

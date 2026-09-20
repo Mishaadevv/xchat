@@ -106,8 +106,26 @@ def train_lora(config: dict, output_dir: str, emit, stop_requested):
     adapter_source = base_model
     base_model = _resolve_base_from_adapter(base_model, emit)
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    emit("training-status", {"message": f"Device: {device.upper()}", "phase": "device"})
+    # Honour the user's device choice: "cuda" forces GPU (clear error if the
+    # machine has none), "cpu" forces CPU, "auto"/"both" take whatever works.
+    requested = str(config.get("device", "auto")).lower()
+    cuda_available = torch.cuda.is_available()
+    if requested == "cuda" and not cuda_available:
+        raise RuntimeError(
+            "CUDA requested but no GPU is available — nvidia-smi/torch.cuda "
+            "sees nothing. Install the CUDA torch build or switch device to CPU/auto."
+        )
+    if requested in ("cuda", "both") and cuda_available:
+        device = "cuda"
+    elif requested == "cpu":
+        device = "cpu"
+    else:
+        device = "cuda" if cuda_available else "cpu"
+    if device == "cuda":
+        gpu_name = torch.cuda.get_device_name(0)
+        emit("training-status", {"message": f"Device: CUDA — {gpu_name}", "phase": "device", "device": "cuda"})
+    else:
+        emit("training-status", {"message": "Device: CPU", "phase": "device", "device": "cpu"})
 
     tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True, padding_side="right")
     if tokenizer.pad_token is None:
